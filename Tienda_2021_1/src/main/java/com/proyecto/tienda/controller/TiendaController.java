@@ -10,4 +10,9 @@ public class TiendaController {
 	public String ver() {
 		return "index";
 	}
+	
+	@RequestMapping("/detalle")
+	public String verDetalle() {
+		return "producto";
+	}
 }
