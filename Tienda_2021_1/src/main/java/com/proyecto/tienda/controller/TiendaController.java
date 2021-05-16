@@ -15,4 +15,5 @@ public class TiendaController {
 	public String verDetalle() {
 		return "producto";
 	}
+	
 }
