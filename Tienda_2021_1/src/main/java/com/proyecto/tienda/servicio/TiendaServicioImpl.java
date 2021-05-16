@@ -19,4 +19,9 @@ public class TiendaServicioImpl implements TiendaServicio  {
 		return repositorio.findAll();
 	}
 
+	@Override
+	public List<Producto> listaProductosPorStock() {
+		return repositorio.listaProductosPorStock();
+	}
+
 }

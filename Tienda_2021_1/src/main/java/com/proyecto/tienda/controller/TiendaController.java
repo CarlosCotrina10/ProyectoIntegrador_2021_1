@@ -40,8 +40,19 @@ public class TiendaController {
 	@RequestMapping("/listarEnTienda")
 	@ResponseBody
 	public List<Producto> listaProductosTienda(){
+		System.out.println("------------------------");
 		System.out.println("Entro el metodo listaProductosTienda en la consola");
+		System.out.println("------------------------");
 		return servicio.listaProductosTienda();
+	}
+	
+	@RequestMapping("/listarEnTiendaxStock")
+	@ResponseBody
+	public List<Producto> listaProductosTiendaxStock(){
+		System.out.println("--------------------");
+		System.out.println("Entro el metodo listaProductosTiendaxStock en la consola");
+		System.out.println("--------------------");
+		return servicio.listaProductosPorStock();
 	}
 	
 }
