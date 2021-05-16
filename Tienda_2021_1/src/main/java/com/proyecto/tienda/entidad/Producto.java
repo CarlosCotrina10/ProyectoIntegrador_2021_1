@@ -19,7 +19,7 @@ public class Producto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProd;
 	private String nomProd;
-	private String descProd;
+	private String descripcion;
 	private int stock;
 	private double precio;
 	
@@ -46,12 +46,12 @@ public class Producto {
 		this.nomProd = nomProd;
 	}
 
-	public String getDescProd() {
-		return descProd;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setDescProd(String descProd) {
-		this.descProd = descProd;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public int getStock() {
@@ -85,6 +85,7 @@ public class Producto {
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
-	
+
+
 
 }
