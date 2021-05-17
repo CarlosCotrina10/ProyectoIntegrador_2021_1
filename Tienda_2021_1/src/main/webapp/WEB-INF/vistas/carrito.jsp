@@ -2,42 +2,21 @@
 <html lang="esS">
 <head>
 <meta charset="UTF-8">
+<title>Carrito</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Pagina Principal</title>
+</head>
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
-
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
-<style>
-.carousel-control-next, .carousel-control-prev {
-	padding: 0;
-	background: 0 0;
-	border: 0;
-}
-
-.visually-hidden, .visually-hidden-focusable:not(:focus):not(:focus-within)
-	{
-	position: absolute !important;
-	width: 1px !important;
-	height: 1px !important;
-	padding: 0 !important;
-	margin: -1px !important;
-	overflow: hidden !important;
-	clip: rect(0, 0, 0, 0) !important;
-	white-space: nowrap !important;
-	border: 0 !important;
-}
-</style>
-</head>
 <body id="page-top">
 
 	<!-- Page Wrapper -->
@@ -53,7 +32,7 @@
 				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 					<div class="">
-						<a href="/index" class="text-decoration-none"> <!-- Logo --> <span
+						<a href="/index" class="text-decoration-none"> <span
 							class="h3 ml-5">Tienda</span>
 						</a>
 					</div>
@@ -86,10 +65,9 @@
 
 						<!-- Carrito -->
 						<li class="nav-item dropdown no-arrow mx-1"><a
-							class="nav-link" href="/carrito"
-							id="carrito"> <i class="fas fa-shopping-cart fa-fw"></i>
-								<!-- Icon -- Carrito --> <span
-								class="badge badge-danger badge-counter">7</span>
+							class="nav-link" href="/carrito" id="carrito"> <i
+								class="fas fa-shopping-cart fa-fw"></i> <!-- Icon -- Carrito -->
+								<span class="badge badge-danger badge-counter">7</span>
 						</a></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
@@ -129,86 +107,85 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container-fluid" style="min-height: 400px;">
 
-					<!-- Carusel -->
-					<div class="mb-4">
-						<div id="carouselExampleIndicators" class="carousel slide"
-							data-bs-ride="carousel">
-							<div class="carousel-inner">
-								<div class="carousel-item active">
-									<img src="img/slider_01.png" class="d-block w-100" alt="...">
-								</div>
-								<div class="carousel-item">
-									<img src="img/slider_02.png" class="d-block w-100" alt="...">
-								</div>
-							</div>
-							<button class="carousel-control-prev" type="button"
-								data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span class="visually-hidden">Previous</span>
-							</button>
-							<button class="carousel-control-next" type="button"
-								data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-								<span class="carousel-control-next-icon" aria-hidden="true"></span>
-								<span class="visually-hidden">Next</span>
-							</button>
+					<div>
+						<!-- Cuando el carrito tiene producto -->
+						<h1>CARRITO DE COMPRAS</h1>
+						<div>
+							<br>
+							<table class="w-100 table">
+								<thead>
+									<tr class="row">
+										<th class="col-md-1"></th>
+										<th class="col-md-7">Título</th>
+										<th class="col-md-1">Precio unitario</th>
+										<th class="col-md-1">Cantidad</th>
+										<th class="col-md-1">Subtotal</th>
+										<th class="col-md-1"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- aqui va un for -->
+									<tr class="row">
+										<td class="col-md-1"><a href="/detalle"><img
+												src="img/img1.jpg" alt="" class="img-fluid"></a></td>
+										<td class="col-md-7"><a href="/detalle"
+											class="text-decoration-none">SMARTPHONE XIAOMI REDMI NOTE
+												8 COLOR LUZ DE LUNA, 4GB RAM, 64GB ALMACENAMIENTO</a></td>
+										<td class="col-md-1"><span class="text-danger">S/.</span>
+											794.00</td>
+										<td class="col-md-1"><input type="number" disabled
+											class="form-control" value="1"></td>
+										<td class="col-md-1"><span class="text-danger">S/.</span>
+											794.00</td>
+										<td class="col-md-1"><a class="" href="#" role="button">
+												<i class="fas fa-trash-alt fa-fw" style="width: 100%;"></i>
+										</a></td>
+									</tr>
+									<tr class="row">
+										<td class="col-md-1"><a href="/detalle"><img
+												src="img/img1.jpg" alt="" class="img-fluid"></a></td>
+										<td class="col-md-7"><a href="/detalle"
+											class="text-decoration-none">SMARTPHONE XIAOMI REDMI NOTE
+												8 COLOR LUZ DE LUNA, 4GB RAM, 64GB ALMACENAMIENTO</a></td>
+										<td class="col-md-1"><span class="text-danger">S/.</span>
+											794.00</td>
+										<td class="col-md-1"><input type="number" disabled
+											class="form-control" value="1"></td>
+										<td class="col-md-1"><span class="text-danger">S/.</span>
+											794.00</td>
+										<td class="col-md-1"><a class="" href="#" role="button">
+												<i class="fas fa-trash-alt fa-fw" style="width: 100%;"></i>
+										</a></td>
+									</tr>
+									<!-- end for -->
+								</tbody>
+								<tfoot>
+									<tr class="row">
+										<td class="col-md-8"></td>
+										<td class="col-md-3 text-right">
+											<div>SubTotal S/.50.00</div>
+											<div class="text-danger">
+												<strong>Total a Pagar S/. 80.00</strong>
+											</div>
+											<div class="my-4">
+												<button class="btn btn-lg btn-primary w-100">COMPRAR</button>
+											</div>
+										</td>
+										<td class="col-md-1"></td>
+									</tr>
+								</tfoot>
+							</table>
 						</div>
+						<!-- Cuando el carrito este vacio -->
+						<!-- 
+                <div class="text-center" style="margin-top: 160px;">
+                    <h4><strong><span class="text-danger">TU CARRITO ESTA VACIO </span>¡AGREGA TUS PRODUCTOS Y DISFRUTA DE NUESTROS BAJOS PRECIOS!</strong></h4>
+                </div>
+                -->
 					</div>
 
-					<br>
-
-					<!-- Cuerpo de pagina - Lista de productos-->
-					<div class="row mr-5 ml-5">
-						<div class="col-lg-3">
-							<div class="card mb-4">
-								<div class="card-body">
-									<a href="/detalle"> <img src="img/img1.jpg"
-										class="d-block w-100" alt="">
-									</a>
-									<div class="text-center">
-										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3">
-							<div class="card mb-4">
-								<div class="card-body">
-									<a href="/detalle"> <img src="img/img2.jpg"
-										class="d-block w-100" alt="">
-									</a>
-									<div class="text-center">
-										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3">
-							<div class="card mb-3">
-								<div class="card-body">
-									<a href="/detalle"> <img src="img/img4.jpg"
-										class="d-block w-100" alt="">
-									</a>
-									<div class="text-center">
-										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-3">
-							<div class="card mb-4">
-								<div class="card-body">
-									<a href="/detalle"> <img src="img/img4.jpg"
-										class="d-block w-100" alt="">
-									</a>
-									<div class="text-center">
-										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				<!-- /.container-fluid -->
 
@@ -245,7 +222,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">Ã—</span>
+						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">Select "Logout" below if you are ready

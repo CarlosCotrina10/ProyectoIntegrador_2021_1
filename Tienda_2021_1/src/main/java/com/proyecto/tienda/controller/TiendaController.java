@@ -30,6 +30,23 @@ public class TiendaController {
 	public String verDetalle() {
 		return "producto";
 	}
+	//este metodo se elimina solo es de prueba para ver el login
+	@RequestMapping("/login")
+	public String verLogin() {
+		return "login";
+	}
+	
+	//este metodo se elimina solo es de prueba para ver el register
+	@RequestMapping("/register")
+	public String verRegister() {
+		return "register";
+	}
+	
+	//este metodo se elimina solo es de prueba para ver el carrito
+		@RequestMapping("/carrito")
+		public String verCarrito() {
+			return "carrito";
+		}
 
 	@RequestMapping("/listaCategorias")
 	@ResponseBody
