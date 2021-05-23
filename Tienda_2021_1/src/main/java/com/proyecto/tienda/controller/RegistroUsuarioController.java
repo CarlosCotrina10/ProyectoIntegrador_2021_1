@@ -20,7 +20,7 @@ import com.proyecto.tienda.servicio.TiposUsuarioServicio;
 public class RegistroUsuarioController {
 
 	@Autowired
-	private UsuarioServicio clienteServicio;
+	private UsuarioServicio usuarioServicio;
 	
 	
 	@Autowired
@@ -46,10 +46,10 @@ public class RegistroUsuarioController {
 	
 	//Registrar Cliente
     @ResponseBody
-	@RequestMapping("/registraCliente")
-	public Map< String, Object> insertaCliente(Usuario obj){
+	@RequestMapping("/registraUsuario")
+	public Map< String, Object> insertaUsuario(Usuario obj){
 		Map< String, Object> salida = new HashMap<>();
-		Usuario objSalida = clienteServicio.insertarUsuario(obj);
+		Usuario objSalida = usuarioServicio.insertarUsuario(obj);
 		if(objSalida == null) {
 			salida.put("MENSAJE", "Registro Erronéo");
 		}else {
