@@ -9,20 +9,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.proyecto.tienda.entidad.Cliente;
+import com.proyecto.tienda.entidad.Usuario;
 import com.proyecto.tienda.entidad.Distritos;
-import com.proyecto.tienda.servicio.ClienteServicio;
+import com.proyecto.tienda.entidad.TiposUsuario;
+import com.proyecto.tienda.servicio.UsuarioServicio;
 import com.proyecto.tienda.servicio.DistritosServicio;
+import com.proyecto.tienda.servicio.TiposUsuarioServicio;
 
 @Controller
-public class RegistroClienteController {
+public class RegistroUsuarioController {
 
 	@Autowired
-	private ClienteServicio clienteServicio;
+	private UsuarioServicio usuarioServicio;
 	
 	
 	@Autowired
 	private DistritosServicio distritosServicio;
+	
+	@Autowired
+	private TiposUsuarioServicio tiposServicio;
 	
 	
 	//Listar Distritos
@@ -32,12 +37,19 @@ public class RegistroClienteController {
 		return distritosServicio.listarDistritos();
 	}
 	
+	//Listar TiposUsuario
+	@ResponseBody
+	@RequestMapping("/listaTiposUsuario")
+	public List<TiposUsuario> listarTiposUsuario(){
+		return tiposServicio.listarTiposUsuario();
+	}
+	
 	//Registrar Cliente
     @ResponseBody
-	@RequestMapping("/registraCliente")
-	public Map< String, Object> insertaCliente(Cliente obj){
+	@RequestMapping("/registraUsuario")
+	public Map< String, Object> insertaUsuario(Usuario obj){
 		Map< String, Object> salida = new HashMap<>();
-		Cliente objSalida = clienteServicio.insertarCliente(obj);
+		Usuario objSalida = usuarioServicio.insertarUsuario(obj);
 		if(objSalida == null) {
 			salida.put("MENSAJE", "Registro Erronéo");
 		}else {
@@ -45,8 +57,5 @@ public class RegistroClienteController {
 		}
 		return salida;
 	}
-	
-	
-	
-	
+
 }

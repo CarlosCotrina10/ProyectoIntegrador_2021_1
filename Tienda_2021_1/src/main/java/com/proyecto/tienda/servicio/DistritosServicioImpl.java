@@ -16,7 +16,6 @@ public class DistritosServicioImpl implements DistritosServicio {
 	
 	@Override
 	public List<Distritos> listarDistritos() {
-		// TODO Auto-generated method stub
 		return repositorio.findAll();
 	}
 
