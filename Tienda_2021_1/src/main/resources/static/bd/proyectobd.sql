@@ -47,7 +47,7 @@ CREATE TABLE tb_usuarios(
 	CONSTRAINT FK_Usuario_Distrito Foreign Key(codDistrito) REFERENCES tb_distritos(codDistrito)
 ); 
 
-/*-- CREANDO LA TABAL tb_cliente
+/*-- CREANDO LA TABLA tb_cliente
 DROP TABLE IF EXISTS tb_cliente;
 CREATE TABLE tb_cliente(
 	codcliente 	int 		AUTO_INCREMENT,
@@ -85,6 +85,7 @@ CREATE TABLE tb_productos(
 	CONSTRAINT PK_Productos Primary Key(idProd), 
 	CONSTRAINT FK_Productos_Categoria Foreign Key(idCategoria) REFERENCES tb_categorias(idCategoria)
 );
+
 select * from tb_productos;
 -- CREANDO LA TABAL tb_detalle_boleta
 DROP TABLE IF EXISTS tb_detalle_boleta;

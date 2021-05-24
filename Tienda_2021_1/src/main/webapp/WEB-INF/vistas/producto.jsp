@@ -45,15 +45,10 @@
 							</div>
 						</div>
 						<div class="col-md-6 p-5">
-							<h1>Laptop ASUS 14" IPS LED FHD Core i5-1135G7 2.4 / 4.2GHz,
-								8GB DDR4, 512GB SSD M.2 NVMe</h1>
-							<div>Laptop ASUS 14" IPS LED FHD Core i5-1135G7 2.4 /
-								4.2GHz, 8GB DDR4, 512GB SSD M.2 NVMe Video Intel Iris Xᵉ
-								Graphics, Intel Wi-Fi 6 (802.11ax) + Bluetooth 5.0 (Dual band)
-								2x2, Camara Web HD</div>
+							<h1>${prod.nomProd }</h1>
+							<div>${prod.descripcion }</div>
 							<div class="my-5">
-								<span class="text-lg text-danger"><strong>S/.3
-										950.00</strong></span>
+								<span class="text-lg text-danger"><strong>S/.${prod.precio }</strong></span>
 							</div>
 							<form action="/carrito">
 								<div class="col-md-2 p-0 mb-3">

@@ -82,7 +82,12 @@
 
 					<br>
 
+					<div id = "posts">
+						<!-- se agrega con js -->
+					</div>
+					
 					<!-- Cuerpo de pagina - Lista de productos-->
+					<!-- 
 					<div class="row mr-5 ml-5">
 						<div class="col-lg-3">
 							<div class="card mb-4">
@@ -134,6 +139,7 @@
 						</div>
 					</div>
 				</div>
+				 -->
 				<!-- /.container-fluid -->
 
 			</div>
@@ -198,5 +204,60 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
 		crossorigin="anonymous"></script>
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function() {
+			$.getJSON("listarEnTienda", {}, function(data) {
+				var cont = 4;
+				var row = 0;
+				$.each(data, function(i, item){
+					if(cont == 4) {
+						row++;
+						var div = document.createElement('div');
+						div.setAttribute('class', 'row mr-5 ml-5');
+						div.setAttribute('id', "id_"+row);
+						$('#posts').append(div);
+						cont = 0;
+					};
+					
+					var div = document.createElement('div');
+					var name = item.nomProd;
+					
+					div.setAttribute('class', 'col-lg-3');
+					div.innerHTML = "<div class='card mb-4'><div class='card-body'><a href='/detalle'> <img src='img/img1.jpg' class='d-block w-100' alt=''></a><div class='text-center'><a href='/detalle/"+item.idProd+"'><h5>"+item.nomProd+"</h5> </a> <span>S/. "+item.precio+"</span></div></div></div>";
+		
+					console.log(name);
+					$("#id_"+row).append(div);
+					cont++;
+				});
+			});
+		});
+	
+	</script>
+	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

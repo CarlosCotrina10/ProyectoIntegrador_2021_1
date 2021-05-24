@@ -1,6 +1,7 @@
 package com.proyecto.tienda.servicio;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,12 @@ public class TiendaServicioImpl implements TiendaServicio  {
 	public List<Producto> listaProductosPorStock() {
 		return repositorio.listaProductosPorStock();
 	}
+
+	@Override
+	public Optional<Producto> obtienePorId(int idProd) {
+		return repositorio.findById(idProd);
+	}
+
+
 
 }

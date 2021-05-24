@@ -15,6 +15,16 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public Usuario insertarUsuario(Usuario obj) {
 		return repositorio.save(obj);
+	}
+
+	@Override
+	public Usuario login(Usuario bean) {
+		return repositorio.login(bean);
+	}
+
+	@Override
+	public Usuario save(Usuario bean) {
+		return repositorio.save(bean);
 	} 
 	
 	
