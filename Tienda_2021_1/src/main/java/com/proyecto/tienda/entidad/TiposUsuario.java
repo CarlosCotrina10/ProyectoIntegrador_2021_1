@@ -1,5 +1,6 @@
 package com.proyecto.tienda.entidad;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ public class TiposUsuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idTipo")
 	private int idTipo;
 	
 	private String descripcion;

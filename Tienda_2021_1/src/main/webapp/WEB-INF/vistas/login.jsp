@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <!DOCTYPE html>
 <html lang="esS">
 <head>
@@ -9,6 +10,7 @@
 <meta name="author" content="">
 <title>Login</title>
 <!-- Custom fonts for this template-->
+<script type="text/javascript" src="js/bs4-form-validation.js"></script>
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
 <link
@@ -16,7 +18,18 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+<link href="css/bootstrapValidator.css" rel="stylesheet">
+
 </head>
+
+<style>
+	.help-block{
+		color: red;
+    	margin-left: 15px;
+	}
+</style>
+
 <body class="bg-gradient-primary">
 
 	<div class="container">
@@ -35,15 +48,15 @@
 									<div class="text-center">
 										<h1 class="h4 text-gray-900 mb-4">Bienvenido !!!</h1>
 									</div>
-									<form class="user">
+									<form class="user" method="post" action="logeo" id="form-logeo">
 										<div class="form-group">
-											<input type="email" class="form-control form-control-user"
-												id="usuario" name="usuario" aria-describedby="emailHelp"
+											<input type="text" class="form-control form-control-user"
+												id="usuario" name="usuario" 
 												placeholder="Ingrese correo...">
 										</div>
 										<div class="form-group">
 											<input type="password" class="form-control form-control-user"
-												id="clave" name="clave" placeholder="ContraseÃ±a">
+												id="clave" name="clave" placeholder="Contraseña">
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">
@@ -52,9 +65,17 @@
 													class="custom-control-label" for="customCheck">Recordarme</label>
 											</div>
 										</div>
-										<a href="/index"
-											class="btn btn-primary btn-user btn-block"> Ingresar </a>										
+										<button type="submit" id="login"
+											class="btn btn-primary btn-user btn-block">Ingresar</button>									
 										<br>
+										<c:if test="${requestScope.mensaje != null}">
+										<div class="form-group text-center">
+											<label class="text-danger">									    
+										        <strong>${requestScope.mensaje}</strong>
+										    </label>
+										</div>
+					               				
+									    </c:if>
 									</form>
 									<hr>
 									<div class="text-center">
@@ -74,6 +95,7 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="js/bootstrapValidator.js" type="text/javascript"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
@@ -81,6 +103,43 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		validarForm();
+		$('#form-logeo').bootstrapValidator({
+	        message: 'This value is not valid',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove text-danger',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+	        	"usuario":{
+	                selector: "#usuario",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'El nombre es obligatorio'
+	                    }
+	                }
+	            },
+	            "clave":{
+	                selector: "#clave",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'La clave es obligatorio'
+	                    }
+	                }
+	            },
+	          
+	        }   
+	    });
+	});
+		
+	function validarForm(){
+		
+	}
+	</script>
 
 </body>
 </html>

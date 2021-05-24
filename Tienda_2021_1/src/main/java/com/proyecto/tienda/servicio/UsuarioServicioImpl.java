@@ -22,13 +22,11 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	public Usuario save(Usuario bean) {
 		return repositorio.save(bean);
 	}
-
-
-
-	
-	
-	
 	
 
+	@Override
+	public Usuario loginUsuario(Usuario obj) {		
+		return repositorio.login(obj);
+	} 
 	
 }

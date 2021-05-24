@@ -17,12 +17,11 @@ import com.proyecto.tienda.servicio.DistritosServicio;
 import com.proyecto.tienda.servicio.TiposUsuarioServicio;
 
 @Controller
-public class RegistroUsuarioController {
+public class UsuarioController {
 
 	@Autowired
 	private UsuarioServicio usuarioServicio;
-	
-	
+		
 	@Autowired
 	private DistritosServicio distritosServicio;
 	

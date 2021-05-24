@@ -35,11 +35,12 @@ public class TiendaController {
 		return "producto";
 	}
 	
+	
 	//este metodo se elimina solo es de prueba para ver el carrito
-		@RequestMapping("/carrito")
-		public String verCarrito() {
-			return "carrito";
-		}
+	@RequestMapping("/carrito")
+	public String verCarrito() {
+		return "carrito";
+	}
 
 	@RequestMapping("/listaCategorias")
 	@ResponseBody
