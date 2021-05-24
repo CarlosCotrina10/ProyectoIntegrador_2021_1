@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="esS">
 <head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,10 +47,7 @@
 						<div class="col-md-6 p-5">
 							<h1>Laptop ASUS 14" IPS LED FHD Core i5-1135G7 2.4 / 4.2GHz,
 								8GB DDR4, 512GB SSD M.2 NVMe</h1>
-							<div>Laptop ASUS 14" IPS LED FHD Core i5-1135G7 2.4 /
-								4.2GHz, 8GB DDR4, 512GB SSD M.2 NVMe Video Intel Iris Xᵉ
-								Graphics, Intel Wi-Fi 6 (802.11ax) + Bluetooth 5.0 (Dual band)
-								2x2, Camara Web HD</div>
+							<div>Laptop ASUS 14" IPS LED FHD Core i5-1135G7 2.4 / 4.2GHz, 8GB DDR4, 512GB SSD M.2 NVMe Video Intel Iris X Graphics, Intel Wi-Fi 6 (802.11ax) + Bluetooth 5.0 (Dual band) 2x2, Camara Web HD</div>
 							<div class="my-5">
 								<span class="text-lg text-danger"><strong>S/.3
 										950.00</strong></span>
@@ -96,29 +93,6 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
-	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">Select "Logout" below if you are ready
-					to end your current session.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button"
-						data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="/login">Logout</a>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>

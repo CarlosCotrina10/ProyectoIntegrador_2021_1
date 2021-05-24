@@ -15,11 +15,11 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public Usuario insertarUsuario(Usuario obj) {
 		return repositorio.save(obj);
-	} 
-	
-	
-	
-	
+	}
 
+	@Override
+	public Usuario loginUsuario(Usuario obj) {		
+		return repositorio.login(obj);
+	} 
 	
 }

@@ -36,6 +36,7 @@ class Validation
     /*
         Make a general text input required for form submission.
     */
+    
     requireText(inputId, minLength, maxLength, illegalCharArray, necessaryCharArray)
     {
         let input = $("#" + inputId);
@@ -74,7 +75,49 @@ class Validation
 
         return invalidString;
     }
+	
+	/*
+	
+	*/
+	requireSelect(inputId, minLength, descripcion, maxLength, illegalCharArray, necessaryCharArray)
+    {
+        let input = $("#" + inputId);
+        let invalidString = "";
 
+        // Create requried *
+        this.createAsterisk(input);
+
+        // Add this input to the input log, for easy check alls
+        this.inputLog.push(["requireSelect", inputId, minLength, descripcion, maxLength, illegalCharArray, necessaryCharArray]);
+            
+        // Check string for issues while editing
+        $(input).change('input', () =>
+        {
+            // Append any invalid issues to string when editing
+            invalidString = "";
+            invalidString += this.lengthCheckSelect(input, minLength, maxLength,descripcion);
+            invalidString += this.illegalCharCheck(input, illegalCharArray);
+            this.showWarning(input, inputId, invalidString);
+        });
+
+        // Enable submit again on an input change
+        $(input).on('input', input, () =>
+        {
+            this.submitDisabled(false, this.submitButtonText);
+        });
+
+        // Check string for issues after editing
+        $(input).on('focusout', input, () =>
+        {
+            invalidString += this.necessaryCharCheck(input, necessaryCharArray);
+            this.showWarning(input, inputId, invalidString);
+            // Remove green border
+            this.removeValid(input);
+        });
+
+        return invalidString;
+    }
+	
 
     /*
         Same as require string, but also regex for proper email 
@@ -214,19 +257,34 @@ class Validation
     // Checks if too long or short
     lengthCheck(input, minLength, maxLength)
     {
+    	
         if (input.val().length <= minLength)
         {
-            return "No debe contener mas de " + minLength + " caracteres. ";
+            return "Debe contener mas de " + minLength + " caracteres. ";
         }
         else if (input.val().length >= maxLength)
         {
-            return "No debe contener menos de " + maxLength + " caracteres. ";
+            return "Debe contener menos de " + maxLength + " caracteres. ";
         }
         else
         {
             return "";
         }
     }
+    
+    
+    lengthCheckSelect(input, minLength, maxLength, descripcion)
+    {
+        if (input.val().length <= minLength)
+        {
+            return "Seleccione un " + descripcion;
+        }
+        else
+        {
+            return "";
+        }
+    }
+    
 
     // Checks if contains unwanted text
     illegalCharCheck(input, illegalCharArray)
@@ -525,4 +583,6 @@ class Validation
 
 
 }
+
+
 

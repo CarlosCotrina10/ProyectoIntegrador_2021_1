@@ -16,7 +16,15 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+<link href="css/bootstrapValidator.css" rel="stylesheet">
 </head>
+<style>
+	.help-block{
+		color: red;
+    	margin-left: 15px;
+	}
+</style>
 <body class="bg-gradient-primary">
 
 	<div class="container">
@@ -31,10 +39,11 @@
 									<div class="text-center">
 										<h1 class="h4 text-gray-900 mb-4">Crear Cuenta!!!</h1>
 									</div>
-									<form class="user">
+									<form class="user" id="form-registro">
+									<input type="hidden" name="tipo.idTipo" value="1">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" class="form-control form-control-user"
+												<input type="text" class="form-control form-control-user" required="required"
 													id="nombre" name="nombre" placeholder="Ingrese su nombre">
 											</div>
 											<div class="col-sm-6">
@@ -46,8 +55,8 @@
 										<div class="form-group">
 											<select class="form-control"
 												style="font-size: .8rem; border-radius: 10rem; height: 50px;"
-												name="distrito" id="distrito">
-												<option value="1">Seleccione un distrito</option>
+												name="distrito.codDistrito" id="distrito">
+												<option value="">Seleccione un distrito</option>
 											</select>
 										</div>
 										<div class="form-group row">
@@ -58,16 +67,15 @@
 											<div class="col-sm-6">
 												<input type="password"
 													class="form-control form-control-user" id="clave"
-													name="clave" placeholder="Ingrese la contraseÃ±a">
+													name="clave" placeholder="Ingrese la contraseña">
 											</div>
 										</div>
-										<a href="/login"
-											class="btn btn-primary btn-user btn-block"> Registrar
-											Cuenta </a>
+										<button type="button" id="registrar" 
+											class="btn btn-primary btn-user btn-block">Registrar</button>
 										<hr>
 									</form>
 									<div class="text-center">
-										<a class="small" href="/login">Â¿Ya tienes una cuenta?
+										<a class="small" href="/login">¿Ya tienes una cuenta?
 											Logeate!</a>
 									</div>
 								</div>
@@ -78,9 +86,13 @@
 			</div>
 		</div>
 	</div>
-
+	
+	
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
+	
+	<script src="js/bootstrapValidator.js" type="text/javascript"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
@@ -88,6 +100,136 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
+	
+	
+	
+	<script type="text/javascript">		
+	
+	$(document).ready(function(){
+		mostrarDistritos();
+		validarForm();
+		registrar();				
+		
+	});
+	
+	function mostrarDistritos(){
+		$.getJSON("listaDistrito", {}, function(data){
+			$.each(data, function(i,item){
+				$("#distrito").append("<option value="+item.codDistrito +">"+ item.nomDistrito +"</option>");
+				
+			});
+		});
+	}
+	
+	function registrar(){
+		$("#registrar").click(function (){ 
+			var validator = $('#form-registro').data('bootstrapValidator');
+		
+			validator.validate();
+			
+			if(validator.isValid()){
+				$.ajax({
+
+					type: 'POST',
+					data: $('#form-registro').serialize(),
+					url: 'registrar',
+					success: function(data){
+						alert("existoso");
+						limpiar();
+						validator.resetForm();
+					},
+					error: function(){
+						alert("error");				
+					}
+
+				});
+			}						
+		});
+	}
+
+	
+	function validarForm(){
+		$('#form-registro').bootstrapValidator({
+	        message: 'This value is not valid',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove text-danger',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+	        	"nombre":{
+	                selector: "#nombre",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'El nombre es obligatorio'
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 15,
+	                        message: 'El nombre es de 2 a 15 caracteres'
+	                    },
+	                }
+	            },
+	            "apellido":{
+	                selector: "#apellido",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'El apellido es obligatorio'
+	                    },
+	                    stringLength: {
+	                        min: 2,
+	                        max: 25,
+	                        message: 'El apellido es de 2 a 25 caracteres'
+	                    },
+	                }
+	            },
+	            "[distrito.codDistrito]":{
+	                selector: "#distrito",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'El distrito es obligatorio'
+	                    }
+	                }
+	            },
+	            "usuario":{
+	                selector: "#usuario",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'El usuario es obligatorio'
+	                    },
+	                    stringLength: {
+	                        max: 45,
+	                        message: 'La clave es 45 caracteres maximo'
+	                    },
+	                }
+	            },
+	            "clave":{
+	                selector: "#clave",
+	                validators:{
+	                    notEmpty: {
+	                         message: 'La clave es obligatorio'
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 12,
+	                        message: 'La clave es de 6 a 12 caracteres'
+	                    },
+	                }
+	            },
+	          
+	        }   
+	    });
+	}
+	
+	function limpiar(){
+		$("#nombre").val("");
+		$("#apellido").val("");
+		$("#distrito").val("");
+		$("#usuario").val("");
+		$("#clave").val("");
+	}
+
+	</script>
 
 </body>
 </html>
