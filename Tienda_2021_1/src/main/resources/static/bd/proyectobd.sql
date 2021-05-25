@@ -383,7 +383,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-CALL USP_registrarProducto('Play Station 5', 'Consola de videoJuegos versión 5', 30, 20.75, 3 , 1);
 
 -- > Actualizar PRODUCTO
 DROP PROCEDURE IF EXISTS USP_actualizarProducto;
