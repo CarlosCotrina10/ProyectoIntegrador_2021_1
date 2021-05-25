@@ -76,8 +76,8 @@ CREATE TABLE tb_boleta(
 DROP TABLE IF EXISTS tb_productos;
 CREATE TABLE tb_productos(
 	idProd 		int 		AUTO_INCREMENT,
-    nomProd 	varchar(45),
-	descripcion varchar(200),
+    nomProd 	varchar(300),
+	descripcion varchar(900),
 	stock 		int,
 	precio 		decimal(8,2),
 	idCategoria int,
