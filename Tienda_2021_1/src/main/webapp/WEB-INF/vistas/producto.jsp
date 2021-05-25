@@ -40,7 +40,7 @@
 						<div class="col-md-6 p-5">
 							<div class="card mb-4">
 								<div class="card-body">
-									<img src="https://d2ulnfq8we0v3.cloudfront.net/cdn/296932/media/catalog/product/cache/1/image/1200x/040ec09b1e35df139433887a97daa66f/9/6/969997a0e5da249e4040fb63bd7229ce_4.jpg" class="d-block w-100" alt="">
+									<img src="img/producto/${prod.idProd }.jpg" class="d-block w-100" alt="">
 								</div>
 							</div>
 						</div>
