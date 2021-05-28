@@ -134,7 +134,7 @@
 					data: $('#form-registro').serialize(),
 					url: 'registrar',
 					success: function(data){
-						alert("existoso");
+						alert("Registro existoso");
 						limpiar();
 						validator.resetForm();
 					},
