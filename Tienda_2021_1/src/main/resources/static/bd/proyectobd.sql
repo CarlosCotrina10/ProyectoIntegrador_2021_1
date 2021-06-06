@@ -68,6 +68,7 @@ CREATE TABLE tb_boleta(
 	codUsuario 	int,
 	fecha 		datetime,
 	total 		decimal(8,2),
+	estado		int,         -- 0:Cancelado, 1:Proceso, 2:Pagado (o algo asi)
 	CONSTRAINT PK_Boleta Primary Key(numBoleta),
 	CONSTRAINT FK_Boleta Foreign Key(codUsuario) REFERENCES tb_usuarios(codUsuario)
 );
@@ -169,16 +170,16 @@ insert into tb_productos values(null, 'Kit Teclado y Mouse Teros TED8700, USB, a
 insert into tb_productos values(null, 'Kit de teclado y mouse Gamer Advance ADV-4150, Retro-Iluminado USB, negro.', 'Kit de teclado y mouse Gamer Advance ADV-4150, Retro-Iluminado USB, negro. Teclado Retro-Iluminado, USB.Mouse óptico, 4 botones, USB.', 30, 48.00, 2 , 1); -- 20
 
 
-insert into tb_boleta values('B0001', 3, '2020-06-14', 999);
+insert into tb_boleta values('B0001', 3, '2020-06-14', 999, 1);
 insert into tb_detalle_boleta values('B0001', 17, 10, 99.90);
 
-insert into tb_boleta values('B0002', 4, '2020-06-26', 199);
+insert into tb_boleta values('B0002', 4, '2020-06-26', 199, 1);
 insert into tb_detalle_boleta values('B0002', 1, 10, 19.90);
 
-insert into tb_boleta values('B0003', 5, '2020-07-03', 599.90);
+insert into tb_boleta values('B0003', 5, '2020-07-03', 599.90, 1);
 insert into tb_detalle_boleta values('B0003', 10, 1, 599.90);
 
-insert into tb_boleta values('B0004', 6, '2020-07-11', 999);
+insert into tb_boleta values('B0004', 6, '2020-07-11', 999, 1);
 insert into tb_detalle_boleta values('B0004', 15, 1, 129.90);
 
 
