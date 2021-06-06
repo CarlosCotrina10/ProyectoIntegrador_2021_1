@@ -20,7 +20,7 @@ public class ApiController {
 	
 	@Autowired
 	private ApiServicio servicio;
-
+/*
 	@PutMapping
 	public ResponseEntity<Boleta> actualiza(@RequestBody BoletaJSON bol) {
 
@@ -43,6 +43,30 @@ public class ApiController {
 		}
 
 	}
+*/
+	@PutMapping
+	public ResponseEntity<String> actualiza(@RequestBody BoletaJSON bol) {
 
+		System.out.println("API REST >>>>> " + bol.getNumBoleta());
+		Optional<Boleta> optBoleta = servicio.obtienePorNum(bol.getNumBoleta());
+		
+		if (optBoleta.isPresent()) {
+			Boleta boleta = optBoleta.get();
+			boleta.setEstado(0);
+			boleta = servicio.insertaActualiza(boleta);
+			if (boleta != null) {
+				return ResponseEntity.ok("Se pudo realizar la cancelación.");
+			} else {
+				System.out.println("error");
+				return ResponseEntity.ok("No se pudo realizar la cancelación.");	
+			}
+		} else {
+			System.out.println("no hay");
+			return ResponseEntity.ok("No se encontró ninguna compra con ese código.");
+		}
+
+	}
+	
+	
 
 }
