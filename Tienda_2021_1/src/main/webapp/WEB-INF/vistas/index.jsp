@@ -147,18 +147,12 @@
 				</div>
 				 -->
 				<!-- /.container-fluid -->
-
+				</div>
 			</div>
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Tienda</span>
-					</div>
-				</div>
-			</footer>
+			<jsp:include page="footer.jsp"></jsp:include>
 			<!-- End of Footer -->
 
 		</div>

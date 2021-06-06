@@ -97,7 +97,7 @@
 	</nav>
 	<!-- End of Topbar -->
 
-	<!-- Logout Modal-->
+	
 	<!-- Logout Modal-->
 	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
