@@ -20,7 +20,7 @@ public class ApiController {
 	
 	@Autowired
 	private ApiServicio servicio;
-/*
+
 	@PutMapping
 	public ResponseEntity<Boleta> actualiza(@RequestBody BoletaJSON bol) {
 
@@ -43,7 +43,8 @@ public class ApiController {
 		}
 
 	}
-*/
+
+	/*
 	@PutMapping
 	public ResponseEntity<String> actualiza(@RequestBody BoletaJSON bol) {
 
@@ -66,6 +67,7 @@ public class ApiController {
 		}
 
 	}
+	*/
 	
 	
 
