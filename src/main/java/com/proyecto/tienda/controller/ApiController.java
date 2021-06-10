@@ -57,21 +57,22 @@ public class ApiController {
 			Boleta boleta = optBoleta.get();
 			
 			if (boleta.getEstado() == 0) {
-				mensajeRetorno.setInfo("La compra ya había sido cancelada.");
+				mensajeRetorno.setInfo("La compra con el código " + bol.getInfo() + " ya había sido cancelada.");
 				return ResponseEntity.ok(mensajeRetorno);
 			}
 			
 			boleta.setEstado(0);
 			boleta = servicio.insertaActualiza(boleta);
 			if (boleta != null) {
-				mensajeRetorno.setInfo("La compra fue cancelada exitosamente.");
+				mensajeRetorno.setInfo("La compra con el código " + bol.getInfo() + " fue cancelada exitosamente.");
 				return ResponseEntity.ok(mensajeRetorno);
 			} else {
 				System.out.println("error");
-				return ResponseEntity.badRequest().build();	
+				mensajeRetorno.setInfo("La compra con el código " + bol.getInfo() + " no se pudo cancelar, contactar a soporte.");
+				return ResponseEntity.ok(mensajeRetorno);
 			}
 		} else {
-			mensajeRetorno.setInfo("No existe una compra con ese código.");
+			mensajeRetorno.setInfo("No existe una compra con el código " + bol.getInfo() + ".");
 			return ResponseEntity.ok(mensajeRetorno);
 		}
 
