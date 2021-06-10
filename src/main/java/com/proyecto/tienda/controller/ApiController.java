@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.proyecto.tienda.entidad.Boleta;
-import com.proyecto.tienda.entidad.BoletaJSON;
+import com.proyecto.tienda.entidad.MensajeJSON;
 import com.proyecto.tienda.servicio.ApiServicio;
 
 @RestController
@@ -47,24 +47,32 @@ public class ApiController {
 	*/
 	
 	@PostMapping
-	public ResponseEntity<Boleta> actualiza(@RequestBody BoletaJSON bol) {
+	public ResponseEntity<MensajeJSON> actualiza(@RequestBody MensajeJSON bol) {
 
-		System.out.println("API REST >>>>> " + bol.getNumBoleta());
-		Optional<Boleta> optBoleta = servicio.obtienePorNum(bol.getNumBoleta());
+		System.out.println("API REST >>>>> " + bol.getInfo());
+		MensajeJSON mensajeRetorno = new MensajeJSON();
+		Optional<Boleta> optBoleta = servicio.obtienePorNum(bol.getInfo());
 		
 		if (optBoleta.isPresent()) {
 			Boleta boleta = optBoleta.get();
+			
+			if (boleta.getEstado() == 0) {
+				mensajeRetorno.setInfo("La compra ya había sido cancelada.");
+				return ResponseEntity.ok(mensajeRetorno);
+			}
+			
 			boleta.setEstado(0);
 			boleta = servicio.insertaActualiza(boleta);
 			if (boleta != null) {
-				return ResponseEntity.ok(boleta);
+				mensajeRetorno.setInfo("La compra fue cancelada exitosamente.");
+				return ResponseEntity.ok(mensajeRetorno);
 			} else {
 				System.out.println("error");
 				return ResponseEntity.badRequest().build();	
 			}
 		} else {
-			System.out.println("no hay");
-			return ResponseEntity.badRequest().build();
+			mensajeRetorno.setInfo("No existe una compra con ese código.");
+			return ResponseEntity.ok(mensajeRetorno);
 		}
 
 	}
