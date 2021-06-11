@@ -38,6 +38,12 @@
 }
 </style>
 </head>
+<style>
+	.card-body{
+		height: 427px !important;
+	}
+</style>
+
 <body id="page-top">
 
 	<!-- Page Wrapper -->
@@ -48,85 +54,8 @@
 
 			<!-- Main Content -->
 			<div id="content">
-
 				<!-- Topbar -->
-				<nav
-					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-					<div class="">
-						<a href="#" class="text-decoration-none"> <!-- Logo --> <span
-							class="h3 ml-5">Tienda</span>
-						</a>
-					</div>
-					<!-- Topbar Navbar -->
-					<ul class="navbar-nav ml-auto">
-
-						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-						<li class="nav-item dropdown no-arrow d-sm-none"><a
-							class="nav-link dropdown-toggle" href="#" id="searchDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-						</a> <!-- Dropdown - Messages -->
-							<div
-								class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-								aria-labelledby="searchDropdown">
-								<form class="form-inline mr-auto w-100 navbar-search">
-									<div class="input-group">
-										<input type="text"
-											class="form-control bg-light border-0 small"
-											placeholder="Search for..." aria-label="Search"
-											aria-describedby="basic-addon2">
-										<div class="input-group-append">
-											<button class="btn btn-primary" type="button">
-												<i class="fas fa-search fa-sm"></i>
-											</button>
-										</div>
-									</div>
-								</form>
-							</div></li>
-
-						<!-- Carrito -->
-						<li class="nav-item dropdown no-arrow mx-1"><a
-							class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-shopping-cart fa-fw"></i>
-								<!-- Icon -- Carrito --> <span
-								class="badge badge-danger badge-counter">7</span>
-						</a></li>
-
-						<div class="topbar-divider d-none d-sm-block"></div>
-
-						<!-- Nav Item - User Information -->
-						<li class="nav-item dropdown no-arrow"><a
-							class="nav-link dropdown-toggle" href="#" id="userDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
-								<img class="img-profile rounded-circle"
-								src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-						</a> <!-- Dropdown - User Information -->
-							<div
-								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
-									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-									Settings
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-									Activity Log
-								</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
-									data-target="#logoutModal"> <i
-									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
-								</a>
-							</div></li>
-
-					</ul>
-
-				</nav>
+				<jsp:include page="topBar.jsp"/>
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
@@ -159,16 +88,21 @@
 
 					<br>
 
+					<div id = "posts">
+						<!-- se agrega con js -->
+					</div>
+					
 					<!-- Cuerpo de pagina - Lista de productos-->
+					<!-- 
 					<div class="row mr-5 ml-5">
 						<div class="col-lg-3">
 							<div class="card mb-4">
 								<div class="card-body">
-									<a href="#"> <img src="img/img1.jpg" class="d-block w-100"
-										alt="">
+									<a href="/detalle"> <img src="img/img1.jpg"
+										class="d-block w-100" alt="">
 									</a>
 									<div class="text-center">
-										<a href="#"><h5>Producto</h5></a> <span>S/.35</span>
+										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
 									</div>
 								</div>
 							</div>
@@ -176,11 +110,11 @@
 						<div class="col-lg-3">
 							<div class="card mb-4">
 								<div class="card-body">
-									<a href="#"> <img src="img/img2.jpg" class="d-block w-100"
-										alt="">
+									<a href="/detalle"> <img src="img/img2.jpg"
+										class="d-block w-100" alt="">
 									</a>
 									<div class="text-center">
-										<a href="#"><h5>Producto</h5></a> <span>S/.35</span>
+										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
 									</div>
 								</div>
 							</div>
@@ -188,11 +122,11 @@
 						<div class="col-lg-3">
 							<div class="card mb-3">
 								<div class="card-body">
-									<a href="#"> <img src="img/img4.jpg" class="d-block w-100"
-										alt="">
+									<a href="/detalle"> <img src="img/img4.jpg"
+										class="d-block w-100" alt="">
 									</a>
 									<div class="text-center">
-										<a href="#"><h5>Producto</h5></a> <span>S/.35</span>
+										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
 									</div>
 								</div>
 							</div>
@@ -200,30 +134,25 @@
 						<div class="col-lg-3">
 							<div class="card mb-4">
 								<div class="card-body">
-									<a href="#"> <img src="img/img4.jpg" class="d-block w-100"
-										alt="">
+									<a href="/detalle"> <img src="img/img4.jpg"
+										class="d-block w-100" alt="">
 									</a>
 									<div class="text-center">
-										<a href="#"><h5>Producto</h5></a> <span>S/.35</span>
+										<a href="/detalle"><h5>Producto</h5></a> <span>S/.35</span>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				 -->
 				<!-- /.container-fluid -->
-
+				</div>
 			</div>
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Tienda</span>
-					</div>
-				</div>
-			</footer>
+			<jsp:include page="footer.jsp"></jsp:include>
 			<!-- End of Footer -->
 
 		</div>
@@ -237,28 +166,7 @@
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">Select "Logout" below if you are ready
-					to end your current session.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button"
-						data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
@@ -275,5 +183,73 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
 		crossorigin="anonymous"></script>
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function() {
+			$.getJSON("listarEnTienda", {}, function(data) {
+				var cont = 4;
+				var row = 0;
+				$.each(data, function(i, item){
+					if(cont == 4) {
+						row++;
+						var div = document.createElement('div');
+						div.setAttribute('class', 'row mr-5 ml-5');
+						div.setAttribute('id', "id_"+row);
+						$('#posts').append(div);
+						cont = 0;
+					};
+					
+					var div = document.createElement('div');
+					var name = item.nomProd;
+					
+					div.setAttribute('class', 'col-lg-3');
+					div.innerHTML = "<div class='card mb-4'><div class='card-body'><a href='/detalle/"+item.idProd+"'> <img src='img/producto/"+item.idProd+".jpg' class='d-block w-100' alt=''></a><div class='text-center'><a href='/detalle/"+item.idProd+"'><h5>"+item.nomProd+"</h5> </a> <span>S/. "+item.precio+"</span></div></div></div>";
+		
+					console.log(name);
+					$("#id_"+row).append(div);
+					cont++;
+				});
+			});
+		});
+	
+	</script>
+	<script>
+		  window.watsonAssistantChatOptions = {
+		      integrationID: "36b1b9cd-e5bf-436f-8d59-50ecbd2126f1", // The ID of this integration.
+		      region: "us-south", // The region your integration is hosted in.
+		      serviceInstanceID: "6703e13e-d5d9-497d-9c68-e8c0fb6c041d", // The ID of your service instance.
+		      onLoad: function(instance) { instance.render(); }
+		    };
+		  setTimeout(function(){
+		    const t=document.createElement('script');
+		    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+		    document.head.appendChild(t);
+		  });
+</script>
+	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

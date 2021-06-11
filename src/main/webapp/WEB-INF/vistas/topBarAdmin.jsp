@@ -51,7 +51,7 @@
 				<div
 					class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
 					aria-labelledby="alertsDropdown">
-					<h6 class="dropdown-header">Alerts Center</h6>
+					<h6 class="dropdown-header">Alertas</h6>
 					<a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="mr-3">
 							<div class="icon-circle bg-primary">
@@ -59,9 +59,8 @@
 							</div>
 						</div>
 						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
+							<div class="small text-gray-500">Junio 10, 2021</div>
+							<span class="font-weight-bold">Un nuevo documento ha sido enviado a su correo!</span>
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="mr-3">
@@ -70,8 +69,8 @@
 							</div>
 						</div>
 						<div>
-							<div class="small text-gray-500">December 7, 2019</div>
-							$290.29 has been deposited into your account!
+							<div class="small text-gray-500">Junio 10, 2021</div>
+							$290.29 Ventas realizadas hasta ahora !
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="mr-3">
@@ -80,12 +79,10 @@
 							</div>
 						</div>
 						<div>
-							<div class="small text-gray-500">December 2, 2019</div>
-							Spending Alert: We've noticed unusually high spending for your
-							account.
+							<div class="small text-gray-500">Junio 10, 2021</div>
+							Alert: La cuenta de contraseña expirará pronto, cambielo.
 						</div>
-					</a> <a class="dropdown-item text-center small text-gray-500" href="#">Show
-						All Alerts</a>
+					</a> <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar todas las alertas</a>
 				</div></li>
 
 			<div class="topbar-divider d-none d-sm-block"></div>

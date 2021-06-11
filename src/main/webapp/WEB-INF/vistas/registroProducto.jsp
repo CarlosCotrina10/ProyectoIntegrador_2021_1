@@ -8,6 +8,7 @@
 <meta name="author" content="">
 <title>Registro Usuario</title>
 <!-- Custom fonts for this template-->
+<link href="css/bootstrapValidator.css" rel="stylesheet" type="text/css">
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -17,6 +18,12 @@
 <!-- Custom styles for this page -->
 <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
+<style>
+	.help-block{
+		color: red;
+    	margin-left: 15px;
+	}
+</style>
 <body id="page-top">
 
   <!-- Page Wrapper -->
@@ -50,7 +57,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Registro de Producto</h6>
                 </div>
                 <div class="card-body">
-                  	<form action="">
+                  	<form action="" id="form-reg-producto">
 						<div class="form-group row">
 							<label for="nombre" class="col-xl-2 col-sm-2 col-form-label">Nombre</label>
 							<div class="col-xl-10 col-sm-10">
@@ -151,7 +158,9 @@
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  
+  <script src="js/bootstrapValidator.js"></script>
+  
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -164,5 +173,49 @@
 	
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+  
+  <script src="js/general/general.js"></script>
+  
+  <script type="text/javascript">
+  
+  $(document).ready(function(){
+  	 cambiarLinkSidebar("#nav-usu","#collapseUsuario","#nav-prod","#collapseProducto",1);
+  });
+  
+  $('#form-reg-producto').bootstrapValidator({
+      message: 'This value is not valid',
+      feedbackIcons: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-remove',
+          validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+      	"nombre":{
+              selector: "#nombre",
+              validators:{
+                  notEmpty: {
+                       message: 'El nombre es obligatorio'
+                  },
+                  stringLength: {
+                      min: 3,
+                      max: 40,
+                      message: 'El nombre es de 3 a 40 caracteres'
+                  },
+              }
+          }
+        
+      }   
+  });
+  
+  $("#registrar").click(function(){
+	  
+	  var validator = $('#form-reg-producto').data('bootstrapValidator');
+	  validator.validate();
+	  
+  });
+  
+  
+  </script>
+  
 </body>
 </html>

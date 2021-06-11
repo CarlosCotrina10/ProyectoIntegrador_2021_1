@@ -8,6 +8,7 @@
 <meta name="author" content="">
 <title>Listado Usuario</title>
 <!-- Custom fonts for this template-->
+<link href="css/bootstrapValidator.css" rel="stylesheet" type="text/css">
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -17,6 +18,12 @@
 <!-- Custom styles for this page -->
 <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
+<style>
+	.help-block{
+		color: red;
+    	margin-left: 15px;
+	}
+</style>
 <body id="page-top">
 
   <!-- Page Wrapper -->
@@ -161,25 +168,25 @@
           <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese el usuario"> 
         </div>
             <label for="clave" class="col-xl-2 col-sm-2 col-form-label">Clave</label>
-<div class="col-xl-4 col-sm-4">
-<input type="password" class="form-control" id="clave" name="clave" placeholder="Ingrese la clave"> 
-</div>
-        </div>
-        <div class="form-group row">
-          <label for="tipo" class="col-xl-2 col-sm-2 col-form-label">Tipo</label>
-          <div class="col-xl-4 col-sm-5">
-              <select class="form-control" name="tipo" id="tipo">
-                                <option value="">Seleccione un Tipo</option>
-                                <option value="1">Administrador</option>
-                                <option value="2">Cliente</option>
-                            </select>
-          </div>
-<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
-<div class="col-xl-4 col-sm-5">
-  <select class="form-control" name="estado" id="estado">
-                    <option value="">Seleccione un Estado</option>
-                </select>
-</div>
+			<div class="col-xl-4 col-sm-4">
+			<input type="password" class="form-control" id="clave" name="clave" placeholder="Ingrese la clave"> 
+			</div>
+			        </div>
+			        <div class="form-group row">
+			          <label for="tipo" class="col-xl-2 col-sm-2 col-form-label">Tipo</label>
+			          <div class="col-xl-4 col-sm-5">
+			              <select class="form-control" name="tipo" id="tipo">
+			                                <option value="">Seleccione un Tipo</option>
+			                                <option value="1">Administrador</option>
+			                                <option value="2">Cliente</option>
+			                            </select>
+			          </div>
+			<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
+			<div class="col-xl-4 col-sm-5">
+			  <select class="form-control" name="estado" id="estado">
+			                    <option value="">Seleccione un Estado</option>
+			                </select>
+			</div>
         </div>        
       </div>
       <div class="modal-footer">
@@ -232,6 +239,8 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  <script src="js/bootstrapValidator.js"></script>
+
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -244,5 +253,15 @@
 	
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+  
+  <script src="js/general/general.js"></script>
+  
+  <script>
+  	$(document).ready(function(){
+  		cambiarLinkSidebar("#nav-prod","#collapseProducto","#nav-usu","#collapseUsuario",2);
+  	});
+	
+  </script>
+  
 </body>
 </html>
