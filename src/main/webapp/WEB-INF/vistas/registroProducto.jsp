@@ -212,6 +212,9 @@
 	  var validator = $('#form-reg-producto').data('bootstrapValidator');
 	  validator.validate();
 	  
+	  //mostrar modal mensaje
+	  //$("#miModal").modal("show");
+	  
   });
   
   
