@@ -29,7 +29,7 @@ public class Usuario {
 	private Distritos distrito;
 
 	@Column(name = "usuario")
-	private String usuario;
+	private String user;
 
 	@Column(name = "clave")
 	private String clave;
@@ -44,7 +44,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [codUsuario=" + codUsuario + ", nombre=" + nombre + ", apellido=" + apellido + ", distrito="
-				+ distrito + ", usuario=" + usuario + ", clave=" + clave + ", tipo=" + tipo + ", estado=" + estado
+				+ distrito + ", usuario=" + user + ", clave=" + clave + ", tipo=" + tipo + ", estado=" + estado
 				+ "]";
 	}
 
@@ -72,12 +72,12 @@ public class Usuario {
 		this.apellido = apellido;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getUser() {
+		return user;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getClave() {

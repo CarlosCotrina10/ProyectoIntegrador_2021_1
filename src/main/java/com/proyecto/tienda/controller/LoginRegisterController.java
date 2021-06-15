@@ -37,7 +37,7 @@ public class LoginRegisterController {
 	public String login(UsuarioFalso usu, HttpSession session, HttpServletRequest request) {
 		
 		Usuario u = new Usuario();
-		u.setUsuario(usu.getUsuario());
+		u.setUser(usu.getUsuario());
 		u.setClave(usu.getClave());
 		Usuario usuario = usuarioServicio.loginUsuario(u);
 		if(usuario == null) {
@@ -58,7 +58,7 @@ public class LoginRegisterController {
 		u.setNombre(usu.getNombre());
 		u.setApellido(usu.getApellido());
 		u.setDistrito(usu.getDistrito());
-		u.setUsuario(usu.getUsuario());
+		u.setUser(usu.getUsuario());
 		u.setClave(usu.getClave());
 		u.setTipo(usu.getTipo());
 		u.setEstado(1);
