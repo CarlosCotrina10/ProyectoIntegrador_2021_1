@@ -60,6 +60,12 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public Optional<Usuario> obtieneporId(int idUser) {
 		return repositorio.findById(idUser);
+	}
+
+
+	@Override
+	public List<Usuario> listarPorUsuario(String user) {
+		return repositorio.findByUser(user);
 	} 
 	
 }

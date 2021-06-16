@@ -18,6 +18,8 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 <link href="css/bootstrapValidator.css" rel="stylesheet">
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <style>
 	.help-block{
@@ -133,13 +135,19 @@
 					type: 'POST',
 					data: $('#form-registro').serialize(),
 					url: 'registrar',
-					success: function(data){
-						alert("Registro existoso");
-						limpiar();
-						validator.resetForm();
+					success: function(data){						
+						if(data.tipo == "3"){
+							swal("Mensaje",data.mensaje,"warning");
+						}else if(data.tipo == "2"){
+							swal("Mensaje",data.mensaje,"success");
+							limpiar();
+							validator.resetForm();
+						}else{
+							swal("Mensaje",data.mensaje,"error");
+						}						
 					},
 					error: function(){
-						alert("error");				
+						swal("Error al registrar, intentelo mas tarde");				
 					}
 
 				});
@@ -163,11 +171,10 @@
 	                    notEmpty: {
 	                         message: 'El nombre es obligatorio'
 	                    },
-	                    stringLength: {
-	                        min: 2,
-	                        max: 15,
-	                        message: 'El nombre es de 2 a 15 caracteres'
-	                    },
+	                    regexp: {
+	                        regexp:  "^[À-ÿa-zA-ZñÑ'´ ]{1,}$",
+	                        message: 'Ingrese solo letras'
+	                    }
 	                }
 	            },
 	            "apellido":{
@@ -176,11 +183,10 @@
 	                    notEmpty: {
 	                         message: 'El apellido es obligatorio'
 	                    },
-	                    stringLength: {
-	                        min: 2,
-	                        max: 25,
-	                        message: 'El apellido es de 2 a 25 caracteres'
-	                    },
+	                    regexp: {
+	                        regexp:  "^[À-ÿa-zA-ZñÑ'´ ]{1,}$",
+	                        message: 'Ingrese solo letras'
+	                    }
 	                }
 	            },
 	            "[distrito.codDistrito]":{
@@ -197,10 +203,10 @@
 	                    notEmpty: {
 	                         message: 'El usuario es obligatorio'
 	                    },
-	                    stringLength: {
-	                        max: 45,
-	                        message: 'La clave es 45 caracteres maximo'
-	                    },
+	                    regexp: {
+	                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+	                        message: 'El correo no es valido'
+	                    }
 	                }
 	            },
 	            "clave":{
@@ -211,8 +217,8 @@
 	                    },
 	                    stringLength: {
 	                        min: 6,
-	                        max: 12,
-	                        message: 'La clave es de 6 a 12 caracteres'
+	                        max: 20,
+	                        message: 'La clave es de 6 a 20 caracteres'
 	                    },
 	                }
 	            },

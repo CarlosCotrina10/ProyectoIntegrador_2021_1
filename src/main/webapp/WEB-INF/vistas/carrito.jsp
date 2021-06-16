@@ -37,11 +37,11 @@
 
 					<div>
 						<!-- Cuando el carrito tiene producto -->
-						<h1>CARRITO DE COMPRAS</h1>
+						<h2 class="text-gray-900"><strong>CARRITO DE COMPRAS</strong></h2>
 						<div>
 							<br>
 							<table class="w-100 table">
-								<thead>
+								<thead class="text-gray-900">
 									<tr class="row">
 										<th class="col-md-1"></th>
 										<th class="col-md-7">Título</th>
@@ -149,5 +149,19 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
 		crossorigin="anonymous"></script>
+				
+	<script>
+		  window.watsonAssistantChatOptions = {
+		      integrationID: "36b1b9cd-e5bf-436f-8d59-50ecbd2126f1", // The ID of this integration.
+		      region: "us-south", // The region your integration is hosted in.
+		      serviceInstanceID: "6703e13e-d5d9-497d-9c68-e8c0fb6c041d", // The ID of your service instance.
+		      onLoad: function(instance) { instance.render(); }
+		    };
+		  setTimeout(function(){
+		    const t=document.createElement('script');
+		    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+		    document.head.appendChild(t);
+		  });
+	</script>
 </body>
 </html>

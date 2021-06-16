@@ -15,4 +15,5 @@ function cambiarLinkSidebar(navProdR,collProdR,navProdA,collProdA,num){
 	$(collProdA).children().children()[num].className = "collapse-item active";
 	$(navProdA).children('.nav-link').removeClass('collapsed');
 
+	
 }

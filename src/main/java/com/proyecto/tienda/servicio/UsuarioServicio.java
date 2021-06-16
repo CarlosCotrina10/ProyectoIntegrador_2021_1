@@ -19,5 +19,6 @@ public interface UsuarioServicio {
 	public abstract Usuario registrayactualiza(Usuario obj);
 	public abstract Optional<Usuario> obtieneporId(int idUser);
 	public abstract void eliminaUsuario(int id);
+	public abstract List<Usuario> listarPorUsuario(String user);
 	
 }

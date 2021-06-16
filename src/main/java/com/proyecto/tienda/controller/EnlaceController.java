@@ -31,5 +31,9 @@ public class EnlaceController {
 		return "listadoUsuario";
 	}
 		
+	@RequestMapping("/verPago")
+	public String verPago() {
+		return "pago";
+	}
 	
 }

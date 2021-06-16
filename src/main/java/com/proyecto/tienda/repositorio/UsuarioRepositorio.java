@@ -18,4 +18,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer>{
 	@Query("Select u from Usuario u where nombre like :list")
 	public abstract List<Usuario> listaUsuariosPorNombreLike(@Param("list") String listar);
 	
+	public abstract List<Usuario> findByUser(String user);
+	
 }

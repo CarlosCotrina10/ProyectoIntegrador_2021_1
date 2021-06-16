@@ -4,7 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <title>TOP BAR</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+<style>
+	.scroll-to-top{
+		right: 33px;
+    	bottom: 99px;
+	}
+</style>
 <body>
 	<!-- Topbar -->
 	<nav
@@ -73,8 +80,8 @@
 						Log
 					</a>
 					<div class="dropdown-divider"></div>-->
-						<a class="dropdown-item" href="#" data-toggle="modal"
-							data-target="#logoutModal"> <i
+					<!--  data-toggle="modal" data-target="#logoutModal" -->
+						<a class="dropdown-item" href="#" onClick="modalCerrar()"> <i  
 							class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							Cerrar Sesion
 						</a>
@@ -116,10 +123,41 @@
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">Cancelar</button>
-					<a class="btn btn-primary" href="/logout">Cerrar Sesión</a>
+					<a class="btn btn-primary" id="id_CerrarSession" href="/logout">Cerrar Sesión</a>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		function modalCerrar(){
+			swal("¿Esta Seguro que desea Cerrar Sesion?","", {
+				  buttons: {
+				    cerrar: "Cerrar Session",
+				    cancel: "Cancelar"
+				  },
+				})
+				.then((value) => {
+				  switch (value) {
+				    case "cerrar":				      
+				      swal("Cerrando Session","","success",{
+				    	buttons: {
+							cerrar: "OK"
+						}, 
+				      })
+				      .then((value) => {
+				    	  location.href='/logout';	 
+				      });
+				      break;				 
+				    case "cancel":
+				      break;
+				  }
+				});
+		}	
+	</script>
+<!-- 	.swal2-modal { -->
+<!--     margin-top: 0 !important; -->
+<!-- } -->
 </body>
+
 </html>

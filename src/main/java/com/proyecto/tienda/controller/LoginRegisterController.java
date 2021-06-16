@@ -1,6 +1,7 @@
 package com.proyecto.tienda.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.proyecto.tienda.entidad.TiposUsuario;
 import com.proyecto.tienda.entidad.Usuario;
 import com.proyecto.tienda.entidad.UsuarioFalso;
 import com.proyecto.tienda.servicio.UsuarioServicio;
@@ -62,16 +62,24 @@ public class LoginRegisterController {
 		u.setClave(usu.getClave());
 		u.setTipo(usu.getTipo());
 		u.setEstado(1);
-		System.out.println("---------------------entro" + u);
 		try {
-			Usuario usuario = usuarioServicio.insertarUsuario(u);			
-			if(usuario == null) {
-				salida.put("mensaje", "Error al registrar Usuario");
-				
+			List<Usuario> lista = usuarioServicio.listarPorUsuario(u.getUser());
+			
+			if(CollectionUtils.isEmpty(lista)) {
+				Usuario usuario = usuarioServicio.insertarUsuario(u);			
+				if(usuario == null) {
+					salida.put("mensaje", "Error al registrar Usuario");
+					salida.put("tipo", "1");
+				}else {
+					salida.put("mensaje", "Usuario registrado con exito");
+					salida.put("tipo", "2");
+				}
 			}else {
-				salida.put("mensaje", "Usuario registrado con exito");
-				
+				salida.put("mensaje", "El Correo ya existe");
+				salida.put("tipo", "3");
 			}
+			
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 			salida.put("mensaje", e.getMessage());

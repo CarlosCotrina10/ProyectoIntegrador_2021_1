@@ -68,8 +68,7 @@ public class UsuarioController {
     @RequestMapping("/listarUsuarios")
     public List<Usuario> listaUsuarios(){
     	return usuarioServicio.listaUsuarios();
-    }
-    
+    }    
     
     // ---- Agregar Nuevo Usuario
     @ResponseBody
