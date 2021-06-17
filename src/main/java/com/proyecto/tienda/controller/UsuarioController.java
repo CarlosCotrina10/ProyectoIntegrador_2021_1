@@ -123,6 +123,7 @@ public class UsuarioController {
     @ResponseBody
     @RequestMapping("/eliminarUsuarios")
     public Map<String, Object> eliminarUsuario(int id){
+    	System.out.println("-------------"+id);
     	Map<String, Object> mensaje = new HashMap<String, Object>();
     	try {
     		Optional<Usuario> optUsuario = usuarioServicio.obtieneporId(id);

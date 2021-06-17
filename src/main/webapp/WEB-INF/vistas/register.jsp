@@ -42,7 +42,7 @@
 										<h1 class="h4 text-gray-900 mb-4">Crear Cuenta!!!</h1>
 									</div>
 									<form class="user" id="form-registro">
-									<input type="hidden" name="tipo.idTipo" value="1">
+									<input type="hidden" name="tipo" value="0">
 										<div class="form-group row">
 											<div class="col-sm-6 mb-3 mb-sm-0">
 												<input type="text" class="form-control form-control-user" required="required"
@@ -88,8 +88,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
 	
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>

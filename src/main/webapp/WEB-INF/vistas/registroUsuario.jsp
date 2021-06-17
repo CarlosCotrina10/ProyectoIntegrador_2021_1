@@ -246,7 +246,8 @@
 	                	message:'El nombre es de 3 a 50 caracteres',
 	                	min : 3,
 	                	max : 50
-	                }
+	                },
+	                
 	            }
 	        },
 		    "apellido": {
@@ -267,7 +268,11 @@
 	            validators: {
 	                notEmpty: {
 	                    message: 'El nombre de usuario es un campo obligatorio!'
-	                }
+	                },
+                    regexp: {
+                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                        message: 'El correo no es valido'
+                    }
 	            }
 	        },
 	        "clave": {
@@ -275,7 +280,12 @@
 	            validators: {
 	            	notEmpty: {
 	                    message: 'La clave es un campo obligatorio!'
-	                }
+	                },
+                    stringLength: {
+                        min: 6,
+                        max: 20,
+                        message: 'La clave es de 6 a 20 caracteres'
+                    },
 	            }
 	        },
 	        "distrito.nomDistrito": {
