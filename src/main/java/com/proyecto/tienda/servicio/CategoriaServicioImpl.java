@@ -12,11 +12,11 @@ import com.proyecto.tienda.repositorio.CategoriaRepositorio;
 public class CategoriaServicioImpl implements CategoriaServicio {
 
 	@Autowired
-	private CategoriaRepositorio catrepos;
+	private CategoriaRepositorio repositorio;
 	
 	@Override
 	public List<Categoria> listaCategorias() {
-		return catrepos.findAll();
+		return repositorio.findAll();
 	}
 
 }
