@@ -75,35 +75,11 @@
 													<th>Stock</th>
 													<th>Precio</th>
 													<th>Categoria</th>
+													<th>Estado</th>
 													<th>Opciones</th>
 												</tr>
 											</thead>
 											<tbody>
-												<!-- est se elimina -->
-												<tr>
-													<td>1</td>
-													<td>Laptop HP 240 G7, 14" HD, Intel Celeron N4100 1.10
-														GHz, 4GB DDR4, 1TB SATA.</td>
-													<td>Laptop HP 240 G7, 14" HD, Intel Celeron N4100 1.10
-														GHz, 4GB DDR4, 1TB SATA. Video Intel UHD Graphics 600,
-														Intel Wireless LAN 802.11ac, Bluetooth, Cámara Web.</td>
-													<td class="text-right">20</td>
-													<td class="text-right"><strong><span
-															class="text-danger">S/. </span></strong>30</td>
-													<td>Laptop</td>
-													<td
-														class="d-sm-flex align-items-center justify-content-center">
-														<a href="#" data-target="#modalActualizarProducto"
-														data-toggle="modal"
-														class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mx-1"><i
-															class="fas fa-pen-square fa-sm text-white-50"></i></a> <a
-														href="#" data-target="#eliminarProductoModal"
-														data-toggle="modal"
-														class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mx-1"><i
-															class="fas fa-trash-alt fa-sm text-white-50"></i></a>
-													</td>
-												</tr>
-												<!-- end esto se elimina -->
 											</tbody>
 										</table>
 									</div>
@@ -141,7 +117,8 @@
 		role="dialog" aria-labelledby="modalProducto" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<form class="">
+				<form class="" id="id_form_actualiza" accept-charset="UTF-8"
+					action="registraActualizaCrudProducto" method="post">
 					<div class="modal-header" style="background-color: #4e73df;">
 						<h5 class="modal-title" id="modalProducto" style="color: white;">Actualizar
 							Producto</h5>
@@ -152,30 +129,37 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group row">
-							<label for="nombre" class="col-xl-2 col-sm-2 col-form-label">Nombre</label>
+							<label for="idProd" class="col-xl-2 col-sm-2 col-form-label">ID</label>
+							<div class="col-xl-4 col-sm-4">
+								<input type="text" class="form-control" id="id_idProd"
+									name="idProd" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="nomProd" class="col-xl-2 col-sm-2 col-form-label">Nombre</label>
 							<div class="col-xl-10 col-sm-10">
-								<input type="text" class="form-control" id="nombre"
-									name="nombre" placeholder="Ingrese nombre del producto">
+								<input type="text" class="form-control" id="id_nombre"
+									name="nomProd" placeholder="Ingrese nombre del producto">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="descripcion" class="col-xl-2 col-sm-2 col-form-label">Descripción</label>
 							<div class="col-xl-10 col-sm-10">
 								<textarea class="form-control" name="descripcion"
-									id="descripcion" rows="5"
+									id="id_descripcion" rows="5"
 									placeholder="Ingrese descripción del producto"></textarea>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="stock" class="col-xl-2 col-sm-2 col-form-label">Stock</label>
 							<div class="col-xl-4 col-sm-5">
-								<input type="number" min="0" class="form-control" id="stock"
+								<input type="number" min="0" class="form-control" id="id_stock"
 									name="stock" placeholder="0">
 							</div>
 							<label for="precio" class="col-xl-2 col-sm-2 col-form-label">Precio</label>
 							<div class="col-xl-4 col-sm-5">
 								<input type="number" min="0" step="0.1" class="form-control"
-									id="precio" name="precio" placeholder="0.0">
+									id="id_precio" name="precio" placeholder="0.0">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -187,7 +171,7 @@
 							</div>
 							<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 							<div class="col-xl-4 col-sm-5">
-								<select class="form-control" name="estado" id="estado">
+								<select class="form-control" name="estado" id="id_estado">
 									<option value="">Seleccione un Estado</option>
 									<option value="1">Activo</option>
 									<option value="0">Inactivo</option>
@@ -199,10 +183,11 @@
 							<div class="col-xl-10 col-sm-10">
 								<input type="file" class="">
 							</div>
-						</div>				
+						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary" type="button">Actualizar</button>
+						<button class="btn btn-primary" type="button"
+							id="actualizarProducto">Actualizar</button>
 						<button class="btn btn-secondary" type="button"
 							data-dismiss="modal">Cancel</button>
 					</div>
@@ -289,7 +274,6 @@
 
 
 	<script type="text/javascript">
-	
 		//Listar Categoria
 		$.getJSON("listarCategoria", {}, function(data) {
 			$.each(data, function(i, item) {
@@ -298,8 +282,206 @@
 								+ item.descripcion + "</option>");
 			});
 		});
+
+		$(document).ready(function() {
+			$.getJSON("listarProducto", {}, function(lista) {
+				agregarGrilla(lista);
+			});
+		});
+
+		function agregarGrilla(lista) {
+			$('#tableGeneral').DataTable().clear();
+			$('#tableGeneral').DataTable().destroy();
+			$('#tableGeneral')
+					.DataTable(
+							{
+								data : lista,
+								searching : false,
+								ordering : true,
+								processing : false,
+								pageLength : 5,
+								lengthChange : false,
+								columns : [
+										{
+											data : "idProd"
+										},
+										{
+											data : "nomProd"
+										},
+										{
+											data : "descripcion"
+										},
+										{
+											data : "stock"
+										},
+										{
+											data : "precio"
+										},
+										{
+											data : "categoria.descripcion"
+										},
+										{
+											data : "estado"
+										},
+										{
+											data : function(row, type, val,
+													meta) {
+												var salida = '<a href="#" data-target="#modalActualizarProducto" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mx-1" '
+														+ 'onclick="modificar(\''
+														+ row.idProd
+														+ '\',\''
+														+ row.nomProd
+														+ '\',\''
+														+ row.descripcion
+														+ '\',\''
+														+ row.stock
+														+ '\',\''
+														+ row.precio
+														+ '\',\''
+														+ row.categoria.descripcion
+														+ '\',\''
+														+ row.estado
+														+ '\')" ><i class="fas fa-pen-square fa-sm text-white-50"></i></a> '
+														+ '<a href="#" data-target="#eliminarProductoModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mx-1" '
+														+ 'onclick="eliminar(\''
+														+ row.idProd
+														+ '\')" ><i class="fas fa-trash-alt fa-sm text-white-50"></i></a>';
+												return salida;
+											},
+											className : 'text-center'
+										} ]
+
+							});
+		}
+
+		function modificar(idProd, nomProd, descripcion, stock, precio,
+				idCategoria, estado) {
+			$('#id_idProd').val(idProd);
+			$('#id_nombre').val(nomProd);
+			$('#id_descripcion').val(descripcion);
+			$('#id_stock').val(stock);
+			$('#id_precio').val(precio);
+			$('#id_categoria').val(idCategoria);
+			$('#id_estado').val(estado);
+		}
+
+		$("#actualizarProducto").click(function() {
+			var validator = $('#id_form_actualiza').data('bootstrapValidator');
+			validator.validate();
+			if (validator.isValid()) {
+				$.ajax({
+					type : "POST",
+					url : "modificarProducto",
+					data : $('#id_form_actualiza').serialize(),
+					success : function(data) {
+						agregarGrilla(data.lista);
+						$('#modalActualizarProducto').modal("hide");
+						mostrarMensaje(data.MENSAJE);
+						validator.resetForm();
+					},
+					error : function() {
+						mostrarMensaje(MSG_ERROR);
+					}
+				});
+			}
+		});
+
+		function eliminar(idpro) {
+			mostrarMensajeConfirmacion(MSG_ELIMINAR, accionEliminar, null, idpro);
+		}
+
+		function accionEliminar(idpro) {
+			$.ajax({
+				type : "POST",
+				url : "eliminarProducto",
+				data : {
+					"idpro" : idpro
+				},
+				success : function(data) {
+					agregarGrilla(data.lista);
+					mostrarMensaje(data.MENSAJE);
+				},
+				error : function() {
+					mostrarMensaje(MSG_ERROR);
+				}
+			});
+		}
 	</script>
 
+
+	<script type="text/javascript">
+		$('#id_form_actualiza')
+				.bootstrapValidator(
+						{
+							message : 'Este valor no es valido',
+							feedbackIcons : {
+								valid : 'glyphicon glyphicon-ok',
+								invalid : 'glyphicon glyphicon-remove',
+								validating : 'glyphicon glyphicon-refresh'
+							},
+							fields : {
+								"nomProd" : {
+									selector : '#id_nombre',
+									validators : {
+										notEmpty : {
+											message : 'El nombre es un campo obligatorio!'
+										},
+										stringLength : {
+											message : 'El nombre es de 15 a 300 caracteres',
+											min : 3,
+											max : 50
+										}
+									}
+								},
+								"descripcion" : {
+									selector : '#id_descripcion',
+									validators : {
+										notEmpty : {
+											message : 'La descripcion es un campo obligatorio!'
+										},
+										stringLength : {
+											message : 'La descripcion es de 15 a 900 caracteres',
+											min : 3,
+											max : 50
+										}
+									}
+								},
+								"stock" : {
+									selector : '#id_stock',
+									validators : {
+										notEmpty : {
+											message : 'El stock es un campo obligatorio!'
+										}
+									}
+								},
+								"precio" : {
+									selector : '#id_precio',
+									validators : {
+										notEmpty : {
+											message : 'El precio es un campo obligatorio!'
+										}
+									}
+								},
+								"categoria.descripcion" : {
+									selector : '#id_categoria',
+									validators : {
+										notEmpty : {
+											message : 'Debes seleccionar una Categoria de Producto!'
+										}
+									}
+								},
+								"estado" : {
+									selector : '#id_estado',
+									validators : {
+										notEmpty : {
+											message : 'Debes seleccionar un estado!'
+										}
+									}
+								}
+
+							}
+						});
+	</script>
 
 </body>
 </html>
