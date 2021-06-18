@@ -82,10 +82,23 @@
 											</div>
 										</div>
 										<div class="form-group row">
+											<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
+											<div class="col-xl-10 col-sm-10">
+												<input type="file" id="urlImg" name="urlImg" class="">
+												<br><br>
+												<div class="row mx-1" style="border: 1px solid #d1d3e2;border-radius: .35rem;height:402px">
+													<div class="col-xl-3 col-sm-3"></div>
+													<div class="col-xl-6 col-sm-6">
+														<img src="" id="imgPrevisualizacion" class="img-thumbnail" >
+													</div>	
+												</div>											
+											</div>
+										</div>
+										<div class="form-group row">
 											<label for="stock" class="col-xl-2 col-sm-2 col-form-label">Stock</label>
 											<div class="col-xl-4 col-sm-5">
 												<input type="number" min="0" class="form-control"
-													id="id_stock" name="stock" placeholder="0">
+													id="id_stock" name="stock" placeholder="0" title="entro">
 											</div>
 											<label for="precio" class="col-xl-2 col-sm-2 col-form-label">Precio</label>
 											<div class="col-xl-4 col-sm-5">
@@ -105,18 +118,12 @@
 											<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 											<div class="col-xl-4 col-sm-5">
 												<select class="form-control" name="estado" id="id_estado">
-													<option value="">Seleccione un Estado</option>
+													<option value=" ">Seleccione un Estado</option>
 													<option value="1">Activo</option>
 													<option value="0">Inactivo</option>
 												</select>
 											</div>
-										</div>
-										<div class="form-group row">
-											<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
-											<div class="col-xl-10 col-sm-10">
-												<input type="file" class="">
-											</div>
-										</div>
+										</div>										
 										<div class="form-group row">
 											<div class="col-sm-12">
 												<div class="float-right">
@@ -124,6 +131,7 @@
 														value="Limpiar">
 													<button type="button" class="btn btn-primary "
 														id="id_registrar">Registrar</button>
+													<button type="button" class="btn btn-primary" onClick="subirImg()">Registrar</button>	
 												</div>
 
 											</div>
@@ -170,7 +178,7 @@
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Registro de Producto resultado</div>
+				<div class="modal-body" id="mensajeRegistroRes">Registro de Producto resultado</div>
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">Aceptar</button>
@@ -199,7 +207,11 @@
 	<script src="js/demo/datatables-demo.js"></script>
 
 	<script src="js/general/general.js"></script>
+	
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 
+	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+	
 	<script type="text/javascript">
   
 	//Listar Categoria
@@ -222,12 +234,14 @@
 		          url: "registraProducto", 
 		          data: $('#id_form_registrar').serialize(),
 		          success: function(data){
-		        	  //mostrarMensaje(data.MENSAJE);
+		        	  $("#mensajeRegistroRes").text(data.MENSAJE);
+		        	  $("#msgProductoModal").modal("show");
 		        	  limpiar();
 		        	  validator.resetForm();
 		          },
 		          error: function(){
-		        	  mostrarMensaje(MSG_ERROR);
+		        	  $("#mensajeRegistroRes").text("Error al Registrar Producto");
+		        	  $("#msgProductoModal").modal("show");
 		          }
 		        });
 		        
@@ -262,9 +276,9 @@
 	                    message: 'El nombre es un campo obligatorio!'
 	                },
 	                stringLength :{
-	                	message:'El nombre es de 15 a 300 caracteres',
+	                	message:'El nombre es de 3 a 300 caracteres',
 	                	min : 3,
-	                	max : 50
+	                	max : 300
 	                }
 	            }
 	        },
@@ -275,12 +289,20 @@
 		                message: 'La descripcion es un campo obligatorio!'
 		            },
 		            stringLength :{
-		            	message:'La descripcion es de 15 a 900 caracteres',
+		            	message:'La descripcion es de 3 a 900 caracteres',
 		            	min : 3,
 		            	max : 50
 		            }
 		        }
 		    },
+		    "urlImg": {
+	    		selector : '#urlImg',
+	            validators: {
+	                notEmpty: {
+	                    message: 'Eliga una imagen'
+	                }
+	            }
+	        },
 	        "stock": {
 	    		selector : '#id_stock',
 	            validators: {
@@ -318,6 +340,77 @@
 	});
 	
 	</script> 
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+
+	$(document).ready(function(){
+		mostrarImg();
+	});
+	
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAMYGSWddvLr6JfM_rLXIbYhfK9xSpHhBQ",
+    authDomain: "proyectointegrador2021-bb331.firebaseapp.com",
+    projectId: "proyectointegrador2021-bb331",
+    storageBucket: "proyectointegrador2021-bb331.appspot.com",
+    messagingSenderId: "250568325741",
+    appId: "1:250568325741:web:50ca1a94df7b9a16e59d64"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  function mostrarImg(){
+	  	const $seleccionArchivos = document.querySelector("#urlImg");
+	    const $imagenPrevisualizacion = document.querySelector("#imgPrevisualizacion");
+	    console.log("entro");
+	    $seleccionArchivos.addEventListener("change", () => {
+		    const archivos = $seleccionArchivos.files;
+		    if (!archivos || !archivos.length) {
+		      $imagenPrevisualizacion.src = "";		     
+		      return;
+		    }
+		    const primerArchivo = archivos[0];
+		    const objectURL = URL.createObjectURL(primerArchivo);
+		    $imagenPrevisualizacion.src = objectURL;
+		    
+	    })
+  }
+  
+  function subirImg(){
+	  var storage = firebase.storage();
+	  var file = ($('#urlImg'))[0].files[0];
+	  
+	  var file2 = $("#urlImg").val();
+      var extension = file2.split(".").pop().toLowerCase();
+      
+      if(extension == "jpg" || extension == "png" || extension == "jpeg"){
+          var storageRef = storage.ref('productos/img/'+file.name);
+          var uploadTask = storageRef.put(file);
+
+          uploadTask.on('state_changed',function(snapshot){
+
+          },function(error){
+              console.log(error);
+          },function(){
+              document.getElementById("urlImg").value = "";
+              //$('#imagenPrevisualizacion').attr('src', " ");              
+              //$("#modalMsgSubidaImagen").click();
+              //$("#msgSubidaImagen").text("Imagen subido con exito");
+              uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                  console.log('File available at', downloadURL);                  
+              });
+          });
+      }else{
+          //$("#msgSubidaImagen").text("El archivo debe ser una imagen");
+          //$("#modalMsgSubidaImagen").click();                
+      } 
+  }
+  
+  
+</script>
 
 </body>
 </html>

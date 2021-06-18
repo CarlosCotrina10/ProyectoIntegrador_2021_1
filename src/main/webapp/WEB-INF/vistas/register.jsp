@@ -170,7 +170,7 @@
 	                         message: 'El nombre es obligatorio'
 	                    },
 	                    regexp: {
-	                        regexp:  "^[À-ÿa-zA-ZñÑ'´ ]{1,}$",
+	                        regexp:  "^[À-ÿa-zA-ZñÑ'´ ]{2,}$",
 	                        message: 'Ingrese solo letras'
 	                    }
 	                }
