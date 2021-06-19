@@ -38,13 +38,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		return repositorio.findAll();
 	}
 
-
-	@Override
-	public List<Usuario> listaUsuariosPorNombreLike(String listar) {
-		return repositorio.listaUsuariosPorNombreLike(listar);
-	}
-
-
 	@Override
 	public Usuario registrayactualiza(Usuario obj) {
 		return repositorio.save(obj);
@@ -66,6 +59,19 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public List<Usuario> listarPorUsuario(String user) {
 		return repositorio.findByUser(user);
-	} 
+	}
+
+
+	@Override
+	public List<Usuario> listaUsuariosPorEstado() {
+		return repositorio.listaUsuariosPorEstado();
+	}
+
+
+	@Override
+	public void eliminaEstado(int id) {
+		repositorio.eliminaEstado(id);
+	}
+ 
 	
 }

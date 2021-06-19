@@ -375,7 +375,7 @@
   	function accionEliminar(id){
   	    $.ajax({
   	          type: "POST",
-  	          url: "eliminarUsuarios", 
+  	          url: "modificarEstadoUsuario", 
   	          data: {"id":id},
   	          success: function(data){
   	        	  agregarGrilla(data.lista);
@@ -474,7 +474,7 @@ $('#id_form_actualiza').bootstrapValidator({
 
 <script type="text/javascript">
 var MSG_ERROR = "Se generó un error, consulte al administrador";
-var MSG_ELIMINAR = "¿Está seguro que desea eliminar el Usuario?";
+var MSG_ELIMINAR = "¿Deseas modificar el estado del Usuario?";
 
 function mostrarMensaje(msg, ejecutarAccion){
 	$('#msgUsuarioModal').remove();
