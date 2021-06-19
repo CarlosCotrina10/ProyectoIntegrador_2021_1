@@ -67,7 +67,7 @@ public class UsuarioController {
     @ResponseBody
     @RequestMapping("/listarUsuarios")
     public List<Usuario> listaUsuarios(){
-    	return usuarioServicio.listaUsuarios();
+    	return usuarioServicio.listaUsuariosPorEstado();
     }    
     
     // ---- Agregar Nuevo Usuario
@@ -142,6 +142,31 @@ public class UsuarioController {
 		}
     	
     	return mensaje;
-    }    
+    } 
+    
+    // ---- Modificar estado de Usuario
+    @ResponseBody
+    @RequestMapping("/modificarEstadoUsuario")
+    public Map<String, Object> eliminarEstadoUser(int id){
+    	Map<String, Object> mensaje = new HashMap<String, Object>();
+    	try {
+    		Optional<Usuario> optUsuario = usuarioServicio.obtieneporId(id);
+    		if(optUsuario.isPresent()) {
+    			usuarioServicio.eliminaEstado(id);
+    			mensaje.put("MENSAJE", "Estado de Usuario modificado");
+    		} else {
+    			mensaje.put("MENSAJE", "Falló al modificar Usuario");
+    		}
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			mensaje.put("MENSAJE", "Error al modificar Usuario");
+		}finally {
+			List<Usuario> lista = usuarioServicio.listaUsuariosPorEstado();
+			mensaje.put("lista", lista);
+		}
+    	
+    	return mensaje;
+    }
 
 }

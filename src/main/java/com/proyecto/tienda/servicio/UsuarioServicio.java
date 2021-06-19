@@ -15,10 +15,11 @@ public interface UsuarioServicio {
 
 	// -- Mantenimiento Usuario:
 	public abstract List<Usuario> listaUsuarios();
-	public abstract List<Usuario> listaUsuariosPorNombreLike(String listar);
+	public abstract List<Usuario> listaUsuariosPorEstado();
 	public abstract Usuario registrayactualiza(Usuario obj);
 	public abstract Optional<Usuario> obtieneporId(int idUser);
 	public abstract void eliminaUsuario(int id);
 	public abstract List<Usuario> listarPorUsuario(String user);
+	public abstract void eliminaEstado(int id);
 	
 }
