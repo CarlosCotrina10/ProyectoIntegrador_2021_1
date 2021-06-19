@@ -71,7 +71,7 @@ public class LoginRegisterController {
 				return "loginAdmin";
 			}
 			session2.setAttribute("objUsuarioAdmin", usuario);
-			return "registroUsuario";
+			return "registroProducto";
 		}		
 		
 	}

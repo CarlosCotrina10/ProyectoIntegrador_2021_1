@@ -43,4 +43,16 @@ public class ProductoServicioImpl implements ProductoServicio {
 		repositorio.deleteById(id);	
 	}
 
+
+	@Override
+	public List<Producto> listadoPorEstado() {		
+		return repositorio.listadoPorEstado();
+	}
+
+
+	@Override
+	public void actualizarPorEstado(int id) {
+		repositorio.actualizarPorEstado(id);
+	}
+
 }

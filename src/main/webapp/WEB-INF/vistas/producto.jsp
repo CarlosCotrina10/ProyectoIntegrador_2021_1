@@ -41,7 +41,7 @@
 						<div class="col-md-6 p-5">
 							<div class="card mb-4">
 								<div class="card-body">
-									<img src="img/producto/${prod.idProd }.jpg" class="d-block w-100" alt="">
+									<img src="${prod.urlImg }" class="d-block w-100" alt="">
 								</div>
 							</div>
 						</div>

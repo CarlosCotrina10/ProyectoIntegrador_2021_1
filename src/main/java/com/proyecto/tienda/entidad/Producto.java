@@ -29,6 +29,7 @@ public class Producto {
 	private Categoria categoria;
 	
 	private int estado;
+	private String urlImg;
 
 	public int getIdProd() {
 		return idProd;
@@ -84,8 +85,22 @@ public class Producto {
 
 	public void setEstado(int estado) {
 		this.estado = estado;
+	}	
+	
+	public String getUrlImg() {
+		return urlImg;
 	}
 
+	public void setUrlImg(String urlImg) {
+		this.urlImg = urlImg;
+	}
 
+	@Override
+	public String toString() {
+		return "Producto [idProd=" + idProd + ", nomProd=" + nomProd + ", descripcion=" + descripcion + ", stock="
+				+ stock + ", precio=" + precio + ", categoria=" + categoria + ", estado=" + estado + ", urlImg="
+				+ urlImg + "]";
+	}
+	
 
 }

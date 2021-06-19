@@ -53,7 +53,7 @@ public class ProductoController {
 		@ResponseBody
 	    @RequestMapping("/listarProducto")
 	    public List<Producto> listaProducto(){
-	    	return productoServicio.listaProducto();
+	    	return productoServicio.listadoPorEstado();
 	    }    
 		
 		//Actualizar Producto
@@ -61,6 +61,7 @@ public class ProductoController {
 		@RequestMapping("/modificarProducto")
 		public Map<String, Object> actualizaProducto(Producto obj){
 			Map<String, Object> salida = new HashMap<>();
+			System.out.println("-----------"+obj);
 			try {
 				Producto objSalida = productoServicio.RegistraActualizaProducto(obj); 
 				if (objSalida == null) {
@@ -72,7 +73,7 @@ public class ProductoController {
 				e.printStackTrace();
 				salida.put("MENSAJE", "Error en el sistema");
 			} finally {
-				List<Producto> lista = productoServicio.listaProducto();
+				List<Producto> lista = productoServicio.listadoPorEstado();
 				salida.put("lista", lista);
 			}
 			return salida;
@@ -82,12 +83,12 @@ public class ProductoController {
 		//eliminar
 		@ResponseBody
 		@RequestMapping("/eliminarProducto")
-		public Map<String, Object> eliminaProducto(int idpro){
+		public Map<String, Object> eliminaProducto(int idpro){		
 			Map<String, Object> salida = new HashMap<>();
 			try {
 			Optional<Producto> objSalida = productoServicio.obtienePorId(idpro);
 				if(objSalida.isPresent()) {
-					productoServicio.eliminaProducto(idpro); 
+					productoServicio.actualizarPorEstado(idpro); 
 					salida.put("MENSAJE", "Eliminación Completa");
 				}else {
 					salida.put("MENSAJE", "Errror al Eliminar");
@@ -95,8 +96,9 @@ public class ProductoController {
 			}catch(Exception ex){
 				ex.printStackTrace();
 				salida.put("MENSAJE", "Error con el Servidor");
-			}finally {
-				List<Producto> lista = productoServicio.listaProducto(); 
+			}finally {			
+				List<Producto> lista = productoServicio.listadoPorEstado(); 
+				System.out.println("------------"+lista);
 				salida.put("lista",lista);
 				
 			}

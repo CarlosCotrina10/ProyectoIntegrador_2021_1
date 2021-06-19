@@ -22,5 +22,7 @@ public interface ProductoServicio {
 	public abstract Producto RegistraActualizaProducto(Producto obj);
 	public abstract Optional<Producto> obtienePorId(int idProd);
 	public abstract void eliminaProducto(int id);
+	public abstract List<Producto> listadoPorEstado();
+	public abstract void actualizarPorEstado(int id);
 
 }

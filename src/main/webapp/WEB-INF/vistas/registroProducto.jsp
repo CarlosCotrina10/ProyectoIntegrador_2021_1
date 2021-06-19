@@ -84,14 +84,10 @@
 										<div class="form-group row">
 											<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
 											<div class="col-xl-10 col-sm-10">
-												<input type="file" id="urlImg" name="urlImg" class="">
-												<br><br>
-												<div class="row mx-1" style="border: 1px solid #d1d3e2;border-radius: .35rem;height:402px">
-													<div class="col-xl-3 col-sm-3"></div>
-													<div class="col-xl-6 col-sm-6">
-														<img src="" id="imgPrevisualizacion" class="img-thumbnail" >
-													</div>	
-												</div>											
+												<input type="file" id="imgProd" name="imgProd" class="">
+												<input type="hidden" id="urlImg" name="urlImg">
+												<img src="" id="imgPrevisualizacion" class="img-thumbnail" alt="No imagen" width="30%">
+																							
 											</div>
 										</div>
 										<div class="form-group row">
@@ -131,7 +127,7 @@
 														value="Limpiar">
 													<button type="button" class="btn btn-primary "
 														id="id_registrar">Registrar</button>
-													<button type="button" class="btn btn-primary" onClick="subirImg()">Registrar</button>	
+														
 												</div>
 
 											</div>
@@ -213,7 +209,11 @@
 	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
 	
 	<script type="text/javascript">
-  
+  	
+	$(document).ready(function(){
+		cambiarLinkSidebar("#nav-usu", "#collapseUsuario","#nav-prod", "#collapseProducto", 1);			
+  	});
+	
 	//Listar Categoria
 	$.getJSON("listarCategoria", {}, function(data){
 		$.each(data, function(i,item){
@@ -222,31 +222,7 @@
 	});
 
  
-   //Registrar Producto
-	 $("#id_registrar").click(function(){
-			var validator = $('#id_form_registrar').data('bootstrapValidator');
-		    validator.validate();
-		    //validarForm()
-			
-		    if (validator.isValid()) {
-		        $.ajax({
-		          type: "POST",
-		          url: "registraProducto", 
-		          data: $('#id_form_registrar').serialize(),
-		          success: function(data){
-		        	  $("#mensajeRegistroRes").text(data.MENSAJE);
-		        	  $("#msgProductoModal").modal("show");
-		        	  limpiar();
-		        	  validator.resetForm();
-		          },
-		          error: function(){
-		        	  $("#mensajeRegistroRes").text("Error al Registrar Producto");
-		        	  $("#msgProductoModal").modal("show");
-		          }
-		        });
-		        
-		    }
-		});
+   
   
 	 function limpiar(){
 			$('#id_nombre').val('');
@@ -255,7 +231,12 @@
 			$('#id_precio').val('');
 			$('#id_categoria').val(' ');
 			$('#id_estado').val(' ');
-		}
+			$('#imgPrevisualizacion').attr('src',' ');
+	}
+	 
+	 $('#id_limpiar').click(function(){
+		 $('#imgPrevisualizacion').attr('src',' ');
+	 });
 	 
 	 </script>
 
@@ -278,7 +259,7 @@
 	                stringLength :{
 	                	message:'El nombre es de 3 a 300 caracteres',
 	                	min : 3,
-	                	max : 300
+	                	max : 900
 	                }
 	            }
 	        },
@@ -291,12 +272,12 @@
 		            stringLength :{
 		            	message:'La descripcion es de 3 a 900 caracteres',
 		            	min : 3,
-		            	max : 50
+		            	max : 900
 		            }
 		        }
 		    },
-		    "urlImg": {
-	    		selector : '#urlImg',
+		    "imgProd": {
+	    		selector : '#imgProd',
 	            validators: {
 	                notEmpty: {
 	                    message: 'Eliga una imagen'
@@ -363,7 +344,8 @@
   firebase.initializeApp(firebaseConfig);
   
   function mostrarImg(){
-	  	const $seleccionArchivos = document.querySelector("#urlImg");
+	  console.log("dfads");
+	  	const $seleccionArchivos = document.querySelector("#imgProd");
 	    const $imagenPrevisualizacion = document.querySelector("#imgPrevisualizacion");
 	    console.log("entro");
 	    $seleccionArchivos.addEventListener("change", () => {
@@ -379,36 +361,65 @@
 	    })
   }
   
-  function subirImg(){
-	  var storage = firebase.storage();
-	  var file = ($('#urlImg'))[0].files[0];
-	  
-	  var file2 = $("#urlImg").val();
-      var extension = file2.split(".").pop().toLowerCase();
-      
-      if(extension == "jpg" || extension == "png" || extension == "jpeg"){
-          var storageRef = storage.ref('productos/img/'+file.name);
-          var uploadTask = storageRef.put(file);
-
-          uploadTask.on('state_changed',function(snapshot){
-
-          },function(error){
-              console.log(error);
-          },function(){
-              document.getElementById("urlImg").value = "";
-              //$('#imagenPrevisualizacion').attr('src', " ");              
-              //$("#modalMsgSubidaImagen").click();
-              //$("#msgSubidaImagen").text("Imagen subido con exito");
-              uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                  console.log('File available at', downloadURL);                  
-              });
-          });
-      }else{
-          //$("#msgSubidaImagen").text("El archivo debe ser una imagen");
-          //$("#modalMsgSubidaImagen").click();                
-      } 
-  }
   
+//Registrar Producto
+	$("#id_registrar").click(function(){
+		var validator = $('#id_form_registrar').data('bootstrapValidator');
+		validator.validate();
+		
+		if (validator.isValid()) {
+		
+			var storage = firebase.storage();
+			var file = ($('#imgProd'))[0].files[0];
+				  
+			var file2 = $("#imgProd").val();
+			var extension = file2.split(".").pop().toLowerCase();
+			      
+			if(extension == "jpg" || extension == "png" || extension == "jpeg"){
+				var storageRef = storage.ref('productos/img/'+file.name);
+				var uploadTask = storageRef.put(file);
+		
+				uploadTask.on('state_changed',function(snapshot){
+		
+				},function(error){
+					console.log(error);
+				},function(){
+					document.getElementById("imgProd").value = "";
+				    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+				    console.log('File available at', downloadURL); 
+				    $("#urlImg").val(downloadURL);
+				    console.log("entro");
+				    
+				    registrarProducto(validator);
+				    
+				 	});
+				});
+			}else{
+				                       
+			}  
+		}
+	});
+	
+	function registrarProducto(validator){
+		
+	    
+	    	$.ajax({
+	      		type: "POST",
+	      		url: "registraProducto", 
+	      		data: $('#id_form_registrar').serialize(),
+	      		success: function(data){
+	      		   $("#mensajeRegistroRes").text(data.MENSAJE);
+	      		   $("#msgProductoModal").modal("show");
+	      		   limpiar();
+	      		   validator.resetForm();
+	      		},
+	      		error: function(){
+	      			$("#mensajeRegistroRes").text("Error al Registrar Producto");
+	      		    $("#msgProductoModal").modal("show");
+	      		}
+	      	});		      		       
+	      
+	}
   
 </script>
 
