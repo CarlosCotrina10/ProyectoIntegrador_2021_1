@@ -39,6 +39,9 @@
 						<!-- Cuando el carrito tiene producto -->
 						<h2 class="text-gray-900">
 							<strong>CARRITO DE COMPRAS</strong>
+							<input id="id_usuario_id" value="${sessionScope.objUsuario.codUsuario}" type="hidden"/>	
+							<input id="id_usuario_nombre" value="${sessionScope.objUsuario.nombre}" type="hidden"/>	
+							<input id="id_usuario_apellido" value="${sessionScope.objUsuario.apellido}" type="hidden"/>	
 						</h2>
 						<div>
 							<br>
@@ -159,13 +162,13 @@
 
 				$.getJSON("listaCarrito",{}, function (data){
 					console.log(data);
-					if(data.lenght == 0){
+					if(data){
 						$.each(data, function(index, item){
 							$('#id_table_boleta_body').append("<tr class='row'><td class='col-md-1'><a href='/detalle/"+item.idProd+"'><img src='img/producto/"+item.idProd+".jpg' alt='' class='img-fluid'></a></td><td class='col-md-7'><a href='/detalle"+item.idProd+"' class='text-decoration-none'>"+item.nombre+"</a></td><td class='col-md-1'><span class='text-danger'>S/.</span>"+item.precio+"</td><td class='col-md-1'><input type='number' disabled class='form-control' value='"+item.cantidad+"'></td><td class='col-md-1'><span class='text-danger'>S/.</span>"+item.totalParcial+"</td><td class='col-md-1'><a class='' href='#' onclick='f_elimina_itemCarrito(" + item.idProd +");' role='button'><i class='fas fa-trash-alt fa-fw' style='width: 100%;'></i></a></td></tr>");     
 							total = total + item.totalParcial;
 						});
 						
-						$('#id_table_boleta_footer').append("<tr class='row'><td class='col-md-8'></td><td class='col-md-3 text-right'><div class='text-danger'><strong>Total a Pagar S/. "+total+"</strong></div><div class='my-4'><button class='btn btn-lg btn-primary w-100'>COMPRAR</button></div></td><td class='col-md-1'></td></tr>");
+						$('#id_table_boleta_footer').append("<tr class='row'><td class='col-md-8'></td><td class='col-md-3 text-right'><div class='text-danger'><strong>Total a Pagar S/. "+total+"</strong></div><div class='my-4'><button id='id_btnRegistrar' class='btn btn-lg btn-primary w-100'>COMPRAR</button></div></td><td class='col-md-1'></td></tr>");
 					} else {
 						$('#id_table_boleta_footer').append("<div class='text-center' style='margin-top: 160px;'><h4><strong><span class='text-danger'>TU CARRITO ESTÁ VACÍO </span>¡AGREGA TUS PRODUCTOS Y DISFRUTA DE NUESTROS BAJOS PRECIOS!</strong></h4></div>");	
 					}					
@@ -184,6 +187,44 @@
 				});
 
 			}
+		
+			//Al pulsar el botón registrar
+			$("#id_btnRegistrar").click(function (){
+				var var_usu = $("#id_usuario_id").val();
+				var var_ape = $("#id_usuario_apellido").val();
+				var var_nom = $("#id_usuario_nombre").val();
+				var var_nom_com =  var_nom + ' ' + var_ape;
+				
+				if (var_usu == "0"){
+					//algo
+				}else{
+
+					var jsonParam = {"codUsuario":var_usu,"nombre":var_nom_com};
+
+					$.ajax({
+						url:  'registraBoleta',
+						type: 'POST',
+						dataType:'json',
+						data: jsonParam,
+						success:function(data){
+							if(data.texto != "-1"){
+								console.log(data.texto);
+								$("#idMensajeTexto").html(data.texto);
+								$("#idMensaje").modal("show");
+								$("#id_table_boleta_body").empty();
+								$("#id_cliente_id").val("-1");
+								$("#id_cliente_nombre").val("");
+								$("#id_cliente_apellido").val("");
+							}else
+								console.log('ERROR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+							},
+						error: function (jqXhr) { 
+							console.log('ERROR2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+						}
+				   });	
+					   
+				}
+			});
 	</script>
 </body>
 </html>
