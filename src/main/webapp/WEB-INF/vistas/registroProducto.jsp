@@ -111,6 +111,8 @@
 													<option value=" ">Seleccione una categoria</option>
 												</select>
 											</div>
+											<input type="hidden" name="estado" value="1">
+											<!--  
 											<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 											<div class="col-xl-4 col-sm-5">
 												<select class="form-control" name="estado" id="id_estado">
@@ -119,6 +121,7 @@
 													<option value="0">Inactivo</option>
 												</select>
 											</div>
+											-->
 										</div>										
 										<div class="form-group row">
 											<div class="col-sm-12">
@@ -235,6 +238,8 @@
 	}
 	 
 	 $('#id_limpiar').click(function(){
+		 var validator = $('#id_form_registrar').data('bootstrapValidator');
+		 validator.resetForm();
 		 $('#imgPrevisualizacion').attr('src',' ');
 	 });
 	 
@@ -401,23 +406,21 @@
 	});
 	
 	function registrarProducto(validator){
-		
-	    
-	    	$.ajax({
-	      		type: "POST",
-	      		url: "registraProducto", 
-	      		data: $('#id_form_registrar').serialize(),
-	      		success: function(data){
-	      		   $("#mensajeRegistroRes").text(data.MENSAJE);
-	      		   $("#msgProductoModal").modal("show");
-	      		   limpiar();
-	      		   validator.resetForm();
-	      		},
-	      		error: function(){
-	      			$("#mensajeRegistroRes").text("Error al Registrar Producto");
-	      		    $("#msgProductoModal").modal("show");
-	      		}
-	      	});		      		       
+		$.ajax({
+	    	type: "POST",
+	      	url: "registraProducto", 
+	      	data: $('#id_form_registrar').serialize(),
+	      	success: function(data){
+	      		$("#mensajeRegistroRes").text(data.MENSAJE);
+	      		$("#msgProductoModal").modal("show");
+	      		limpiar();
+	      		validator.resetForm();
+	      	},
+	      	error: function(){
+	      		$("#mensajeRegistroRes").text("Error al Registrar Producto");
+	      		$("#msgProductoModal").modal("show");
+	      	}
+	    });		      		       
 	      
 	}
   

@@ -177,6 +177,8 @@
 									<option value=" ">Seleccione una categoria</option>
 								</select>
 							</div>
+							<input type="hidden" name="estado" value="1">
+							<!--  
 							<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 							<div class="col-xl-4 col-sm-5">
 								<select class="form-control" name="estado" id="id_estado">
@@ -185,13 +187,14 @@
 									<option value="0">Inactivo</option>
 								</select>
 							</div>
+							-->
 						</div>						
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary" type="button"
 							id="actualizarProducto">Actualizar</button>
-						<button class="btn btn-secondary" type="button"
-							data-dismiss="modal">Cancel</button>
+						<button class="btn btn-secondary" type="button" id="id_ActCancelar"
+							data-dismiss="modal">Cancelar</button>
 					</div>
 				</form>
 			</div>
@@ -392,7 +395,7 @@
 			$('#id_stock').val(stock);
 			$('#id_precio').val(precio);
 			$('#id_categoria').val(idCategoria);
-			$('#id_estado').val(estado);urlImg
+			/*$('#id_estado').val(estado);urlImg*/
 			$('#urlImg').val(urlImg);
 			$('#imgPrevisualizacion').attr('src',urlImg);
 		}
@@ -416,7 +419,17 @@
 					
 				}
 			});
-		});			
+		});		
+		
+		$("#id_ActCancelar").click(function(){
+			var validator = $('#id_form_actualiza').data('bootstrapValidator');
+			validator.resetForm();
+		});
+		
+		$("#modalActualizarProducto").click(function(){
+			var validator = $('#id_form_actualiza').data('bootstrapValidator');
+			validator.resetForm();
+		});
 		
 		function mostraMensaje(msg){
 			$("#msgSalida").text(msg);
@@ -519,7 +532,7 @@
   function mostrarImg(){
 	  	const $seleccionArchivos = document.querySelector("#imgProd");
 	    const $imagenPrevisualizacion = document.querySelector("#imgPrevisualizacion");
-	    console.log("entro");
+	    
 	    $seleccionArchivos.addEventListener("change", () => {
 		    const archivos = $seleccionArchivos.files;
 		    if (!archivos || !archivos.length) {
@@ -563,11 +576,8 @@
 					document.getElementById("imgProd").value = "";
 				    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
 				    console.log('File available at', downloadURL); 
-				    $("#urlImg").val(downloadURL);
-				    console.log("entro");
-				    
+				    $("#urlImg").val(downloadURL);				    				   
 				    actualizarProducto(validator);
-				    
 				 	});
 				});
 			}else{
@@ -577,24 +587,21 @@
 	});
 	
 	function actualizarProducto(validator){
-
-			if (validator.isValid()) {
-				$.ajax({
-					type : "POST",
-					url : "modificarProducto",
-					data : $('#id_form_actualiza').serialize(),
-					success : function(data) {
-						agregarGrilla(data.lista);
-						$("#modalActualizarProducto").modal("hide");
-						mostraMensaje(data.MENSAJE);
-						validator.resetForm();
-					},
-					error : function() {
-						mostrarMensaje(MSG_ERROR);
-					}
-				});
-			} 		       
-	      
+		$.ajax({
+			type : "POST",
+			url : "modificarProducto",
+			data : $('#id_form_actualiza').serialize(),
+			success : function(data) {
+				agregarGrilla(data.lista);
+				$("#modalActualizarProducto").modal("hide");
+				console.log("entro3");
+				mostraMensaje(data.MENSAJE);
+				validator.resetForm();
+			},
+			error : function() {
+				mostrarMensaje(MSG_ERROR);
+			}
+		});		       	      
 	}
   
 </script>

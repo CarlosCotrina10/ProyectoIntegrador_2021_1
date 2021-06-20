@@ -184,20 +184,23 @@
 		
 		<div class="form-group row">
           <label for="usuario" class="col-xl-2 col-sm-2 col-form-label">Distrito</label>
-          <div class="col-xl-6 col-sm-6">
+          <div class="col-xl-4 col-sm-6">
             <select class="form-control" name="distrito" id="id_distrito">
 			  <option value=" ">Seleccione un Distrito</option>
 			</select> 
           </div>
-		</div>
-			        
-	    <div class="form-group row">
-		  <label for="tipo" class="col-xl-2 col-sm-2 col-form-label">Tipo</label>
+          <label for="tipo" class="col-xl-2 col-sm-2 col-form-label">Tipo</label>
 		   <div class="col-xl-4 col-sm-5">
 		     <select class="form-control" name="tipo" id="id_tipo">
 			   <option value=" ">Seleccione un Tipo</option>
 			 </select>
 		   </div>
+		</div>
+			        
+	    <div class="form-group row">
+		  
+		   <input type="hidden" name="estado" value="1">
+		   <!--  
 		  <label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 		   <div class="col-xl-4 col-sm-5">
 			  <select class="form-control" name="estado" id="id_estado">
@@ -206,13 +209,14 @@
 					<option value="1">Disponible</option>
 			  </select>
 		   </div>
+		   -->
         </div>
                 
       </div>
       
       <div class="modal-footer">
         <button class="btn btn-primary" type="button" id="actualizarUsuario">Modificar</button>
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
       </div>
       
     </form> 
@@ -431,6 +435,10 @@ $('#id_form_actualiza').bootstrapValidator({
             validators: {
                 notEmpty: {
                     message: 'El nombre de usuario es un campo obligatorio!'
+                },
+                regexp: {
+                    regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                    message: 'El correo no es valido'
                 }
             }
         },
@@ -439,7 +447,12 @@ $('#id_form_actualiza').bootstrapValidator({
             validators: {
             	notEmpty: {
                     message: 'La clave es un campo obligatorio!'
-                }
+                },
+                stringLength: {
+                    min: 6,
+                    max: 20,
+                    message: 'La clave es de 6 a 20 caracteres'
+                },
             }
         },
         "distrito.nomDistrito": {
