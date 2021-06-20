@@ -58,7 +58,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Categoria de Producto</h6>
                 </div>
                 <div class="card-body">
-                  	<form action="">
+                  	<form action="" id="form-regCategoria">
 						<div class="form-group row">
 							<label for="descripcion" class="col-sm-3 col-form-label">Descripcion</label>
 							<div class="col-sm-9">
@@ -67,7 +67,7 @@
 						</div>
 						<div class="form-group row">							
 							<div class="col-sm-12">
-							  <button type="button" class="btn btn-primary float-right" id="guardar">Guardar</button>
+							  <button type="button" class="btn btn-primary float-right" id="id_btnRegCategoria">Guardar</button>
 							</div>
 						</div>
 					</form>
@@ -143,10 +143,28 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
+        <input type="hidden" id="id_codEliminar" value="">
         <div class="modal-body">¿Esta seguro que desea eliminar esta Categoría?</div>
         <div class="modal-footer">
           <button id="eliminarCategoria" type="button" class="btn btn-primary">Eliminar</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="msgSalidaCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="msgSalidaCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #4e73df;">
+          <h5 class="modal-title" id="msgSalidaCategoriaLabel" style="color: white;">Mensaje</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" id="msgSalidaCategoria"></div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Aceptar</button>          
         </div>
       </div>
     </div>
@@ -162,7 +180,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Registro de Categoría resultado</div>
+        <div class="modal-body" id="msgSalidaRegCat">Registro de Categoría resultado</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Aceptar</button>          
         </div>
@@ -196,6 +214,118 @@
   		cambiarLinkSidebar("#nav-usu","#collapseUsuario","#nav-prod","#collapseProducto",2);
   	});
 	
+  	$(document).ready(function() {
+		$.getJSON("listarCategoria", {}, function(lista) {
+			agregarGrilla(lista);
+		});
+	});
+  	
+  	$('#form-regCategoria').bootstrapValidator({
+		message : 'Este valor no es valido',
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {					
+			"descripcion" : {
+				selector : '#descripcion',
+				validators : {
+					notEmpty : {
+					message : 'La descripcion es un campo obligatorio!'
+					},
+					stringLength : {
+						message : 'La descripcion es de 3 a 45 caracteres',
+						min : 3,
+						max : 45
+					}
+				}
+			}
+		}
+	});
+  	
+  	
+  	function agregarGrilla(lista){
+		$('#tableCategoria').DataTable().clear();
+		$('#tableCategoria').DataTable().destroy();
+		$('#tableCategoria').DataTable({
+			data: lista,
+			searching: false,
+			ordering: true,
+			processing: false,
+			pageLength: 5,
+			lengthChange: false,
+			columns:[
+				{data: "idCategoria"},
+				{data: "descripcion"},
+				{data: function(row, type, val, meta){
+					var salida ='<a href="#" data-target="#eliminarCategoriaModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mx-1" ' +
+					'onclick="eliminar(\'' + row.idCategoria + '\')" ><i class="fas fa-trash-alt fa-sm text-white-50"></i></a>';
+					return salida;
+				}, className:'text-center'}
+			]
+			
+		});
+	}
+  	
+  	function mostraMensaje(msg){
+		$("#msgSalidaRegCat").text(msg);
+		$("#msgCategoriaModal").modal("show");	
+	}
+  	
+  	function limpiar(){
+  		$('#descripcion').val('');
+  	}
+  	
+  	$("#id_btnRegCategoria").click(function(){
+		var validator = $('#form-regCategoria').data('bootstrapValidator');
+	    validator.validate();
+		
+	    if (validator.isValid()) {
+	        $.ajax({
+	          type: "POST",
+	          url: "registraCategoria", 
+	          data: $('#form-regCategoria').serialize(),
+	          success: function(data){
+	        	  agregarGrilla(data.lista);
+				  mostraMensaje(data.MENSAJE);
+				  limpiar();
+				  validator.resetForm();
+	          },
+	          error: function(){
+	        	  mostrarMensaje(MSG_ERROR);
+	          }
+	        });
+	        
+	    }
+	});
+  	
+  	function mostraMensajeEliminar(msg){
+		$("#msgSalidaCategoria").text(msg);
+		$("#msgSalidaCategoriaModal").modal("show");	
+	}
+  	
+  	function eliminar(idpro) {
+		$("#id_codEliminar").val(idpro);
+	}
+  	
+  	$("#eliminarCategoria").click(function(){
+		var id = $("#id_codEliminar").val();
+		$.ajax({
+			type : "POST",
+			url : "eliminarCategoria",
+			data : {"id": id},
+			success : function(data) {
+				agregarGrilla(data.lista);
+				$("#eliminarCategoriaModal").modal("hide");
+				mostraMensajeEliminar(data.MENSAJE);				
+			},
+			error : function() {
+				
+			}
+		});
+	});		
+  	
   </script>
   
 </body>

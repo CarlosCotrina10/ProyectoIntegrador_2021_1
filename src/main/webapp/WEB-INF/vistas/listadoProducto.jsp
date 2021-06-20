@@ -69,11 +69,11 @@
 											width="100%" cellspacing="0">
 											<thead class="thead-dark">
 												<tr>
-													<th>N°</th>
+													<th >N°</th>
 													<th>Producto</th>
 													<th>Descripción</th>
 													<th>Stock</th>
-													<th>Precio</th>
+													<th >Precio</th>
 													<th>Categoria</th>
 													<th>Estado</th>
 													<th>Opciones</th>
@@ -151,6 +151,14 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
+							<div class="col-xl-10 col-sm-10">
+								<input type="file" id="imgProd" name="imgProd" class="">
+								<input type="hidden" id="urlImg" name="urlImg">
+								<img src="" id="imgPrevisualizacion" class="img-thumbnail" alt="No imagen" width="30%">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label for="stock" class="col-xl-2 col-sm-2 col-form-label">Stock</label>
 							<div class="col-xl-4 col-sm-5">
 								<input type="number" min="0" class="form-control" id="id_stock"
@@ -169,6 +177,8 @@
 									<option value=" ">Seleccione una categoria</option>
 								</select>
 							</div>
+							<input type="hidden" name="estado" value="1">
+							<!--  
 							<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 							<div class="col-xl-4 col-sm-5">
 								<select class="form-control" name="estado" id="id_estado">
@@ -177,19 +187,14 @@
 									<option value="0">Inactivo</option>
 								</select>
 							</div>
-						</div>
-						<div class="form-group row">
-							<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
-							<div class="col-xl-10 col-sm-10">
-								<input type="file" class="">
-							</div>
-						</div>
+							-->
+						</div>						
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary" type="button"
 							id="actualizarProducto">Actualizar</button>
-						<button class="btn btn-secondary" type="button"
-							data-dismiss="modal">Cancel</button>
+						<button class="btn btn-secondary" type="button" id="id_ActCancelar"
+							data-dismiss="modal">Cancelar</button>
 					</div>
 				</form>
 			</div>
@@ -212,6 +217,7 @@
 				</div>
 				<div class="modal-body">¿Esta seguro que desea eliminar el
 					Producto?</div>
+				<input type="hidden" id="id_codEliminar">
 				<div class="modal-footer">
 					<button id="eliminarProducto" type="button" class="btn btn-primary">Eliminar</button>
 					<button class="btn btn-secondary" type="button"
@@ -242,6 +248,27 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Mensaje Resulatdo Modal-->
+	<div class="modal fade" id="msgSalidaModal" tabindex="-1"
+		role="dialog" aria-labelledby="msgSalidaLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #4e73df;">
+					<h5 class="modal-title" id="msgSalidaLabel" style="color: white;">Mensaje</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="msgSalida">Salida</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" type="button"
+						data-dismiss="modal">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
@@ -263,6 +290,10 @@
 	<script src="js/demo/datatables-demo.js"></script>
 
 	<script src="js/general/general.js"></script>
+	
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
 
 	<script>
 		$(document).ready(
@@ -327,7 +358,7 @@
 											data : function(row, type, val,
 													meta) {
 												var salida = '<a href="#" data-target="#modalActualizarProducto" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mx-1" '
-														+ 'onclick="modificar(\''
+														+ 'onClick="modificar(\''
 														+ row.idProd
 														+ '\',\''
 														+ row.nomProd
@@ -338,9 +369,11 @@
 														+ '\',\''
 														+ row.precio
 														+ '\',\''
-														+ row.categoria.descripcion
+														+ row.categoria.idCategoria
 														+ '\',\''
 														+ row.estado
+														+ '\',\''
+														+ row.urlImg
 														+ '\')" ><i class="fas fa-pen-square fa-sm text-white-50"></i></a> '
 														+ '<a href="#" data-target="#eliminarProductoModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mx-1" '
 														+ 'onclick="eliminar(\''
@@ -355,56 +388,52 @@
 		}
 
 		function modificar(idProd, nomProd, descripcion, stock, precio,
-				idCategoria, estado) {
+				idCategoria, estado,urlImg) {
 			$('#id_idProd').val(idProd);
 			$('#id_nombre').val(nomProd);
 			$('#id_descripcion').val(descripcion);
 			$('#id_stock').val(stock);
 			$('#id_precio').val(precio);
 			$('#id_categoria').val(idCategoria);
-			$('#id_estado').val(estado);
+			/*$('#id_estado').val(estado);urlImg*/
+			$('#urlImg').val(urlImg);
+			$('#imgPrevisualizacion').attr('src',urlImg);
 		}
-
-		$("#actualizarProducto").click(function() {
-			var validator = $('#id_form_actualiza').data('bootstrapValidator');
-			validator.validate();
-			if (validator.isValid()) {
-				$.ajax({
-					type : "POST",
-					url : "modificarProducto",
-					data : $('#id_form_actualiza').serialize(),
-					success : function(data) {
-						agregarGrilla(data.lista);
-						$('#modalActualizarProducto').modal("hide");
-						mostrarMensaje(data.MENSAJE);
-						validator.resetForm();
-					},
-					error : function() {
-						mostrarMensaje(MSG_ERROR);
-					}
-				});
-			}
-		});
 
 		function eliminar(idpro) {
-			mostrarMensajeConfirmacion(MSG_ELIMINAR, accionEliminar, null, idpro);
+			$("#id_codEliminar").val(idpro);
 		}
-
-		function accionEliminar(idpro) {
+		
+		$("#eliminarProducto").click(function(){
+			var idProd = $("#id_codEliminar").val();
 			$.ajax({
 				type : "POST",
 				url : "eliminarProducto",
-				data : {
-					"idpro" : idpro
-				},
+				data : {"idpro": idProd},
 				success : function(data) {
 					agregarGrilla(data.lista);
-					mostrarMensaje(data.MENSAJE);
+					$("#eliminarProductoModal").modal("hide");
+					mostraMensaje(data.MENSAJE);				
 				},
 				error : function() {
-					mostrarMensaje(MSG_ERROR);
+					
 				}
 			});
+		});		
+		
+		$("#id_ActCancelar").click(function(){
+			var validator = $('#id_form_actualiza').data('bootstrapValidator');
+			validator.resetForm();
+		});
+		
+		$("#modalActualizarProducto").click(function(){
+			var validator = $('#id_form_actualiza').data('bootstrapValidator');
+			validator.resetForm();
+		});
+		
+		function mostraMensaje(msg){
+			$("#msgSalida").text(msg);
+			$("#msgSalidaModal").modal("show");	
 		}
 	</script>
 
@@ -429,7 +458,7 @@
 										stringLength : {
 											message : 'El nombre es de 15 a 300 caracteres',
 											min : 3,
-											max : 50
+											max : 900
 										}
 									}
 								},
@@ -442,7 +471,7 @@
 										stringLength : {
 											message : 'La descripcion es de 15 a 900 caracteres',
 											min : 3,
-											max : 50
+											max : 900
 										}
 									}
 								},
@@ -482,6 +511,99 @@
 							}
 						});
 	</script>
+<script>
 
+	$(document).ready(function(){
+		mostrarImg();
+	});
+	
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAMYGSWddvLr6JfM_rLXIbYhfK9xSpHhBQ",
+    authDomain: "proyectointegrador2021-bb331.firebaseapp.com",
+    projectId: "proyectointegrador2021-bb331",
+    storageBucket: "proyectointegrador2021-bb331.appspot.com",
+    messagingSenderId: "250568325741",
+    appId: "1:250568325741:web:50ca1a94df7b9a16e59d64"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  function mostrarImg(){
+	  	const $seleccionArchivos = document.querySelector("#imgProd");
+	    const $imagenPrevisualizacion = document.querySelector("#imgPrevisualizacion");
+	    
+	    $seleccionArchivos.addEventListener("change", () => {
+		    const archivos = $seleccionArchivos.files;
+		    if (!archivos || !archivos.length) {
+		      $imagenPrevisualizacion.src = "";		     
+		      return;
+		    }
+		    const primerArchivo = archivos[0];
+		    const objectURL = URL.createObjectURL(primerArchivo);
+		    $imagenPrevisualizacion.src = objectURL;
+		    
+	    })
+  }
+  
+  
+//Registrar Producto
+	$("#actualizarProducto").click(function(){
+		
+		var validator = $('#id_form_actualiza').data('bootstrapValidator');
+		validator.validate();
+		
+		if($("#imgProd").val() == ""){
+			actualizarProducto(validator);
+		}		
+		else if(validator.isValid()) {
+			
+			var storage = firebase.storage();
+			var file = ($('#imgProd'))[0].files[0];
+				  
+			var file2 = $("#imgProd").val();
+			var extension = file2.split(".").pop().toLowerCase();
+			      
+			if(extension == "jpg" || extension == "png" || extension == "jpeg"){				
+				var storageRef = storage.ref('productos/img/'+file.name);
+				var uploadTask = storageRef.put(file);
+		
+				uploadTask.on('state_changed',function(snapshot){
+		
+				},function(error){
+					console.log(error);
+				},function(){
+					document.getElementById("imgProd").value = "";
+				    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+				    console.log('File available at', downloadURL); 
+				    $("#urlImg").val(downloadURL);				    				   
+				    actualizarProducto(validator);
+				 	});
+				});
+			}else{
+				         
+			}  
+		}
+	});
+	
+	function actualizarProducto(validator){
+		$.ajax({
+			type : "POST",
+			url : "modificarProducto",
+			data : $('#id_form_actualiza').serialize(),
+			success : function(data) {
+				agregarGrilla(data.lista);
+				$("#modalActualizarProducto").modal("hide");
+				console.log("entro3");
+				mostraMensaje(data.MENSAJE);
+				validator.resetForm();
+			},
+			error : function() {
+				mostrarMensaje(MSG_ERROR);
+			}
+		});		       	      
+	}
+  
+</script>
 </body>
 </html>

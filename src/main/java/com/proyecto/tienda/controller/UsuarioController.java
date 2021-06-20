@@ -86,7 +86,7 @@ public class UsuarioController {
 			e.printStackTrace();
 			mensaje.put("MENSAJE", "Error al registrar Usuario");
 		} finally {
-			List<Usuario> lista = usuarioServicio.listaUsuarios();
+			List<Usuario> lista = usuarioServicio.listaUsuariosPorEstado();
 			mensaje.put("lista", lista);
 		}
     	
@@ -111,7 +111,7 @@ public class UsuarioController {
 			System.out.println("Error:" + e.getMessage());
 			mensaje.put("MENSAJE", "Error al modificar Usuario");
 		} finally {
-			List<Usuario> lista = usuarioServicio.listaUsuarios();
+			List<Usuario> lista = usuarioServicio.listaUsuariosPorEstado();
 			mensaje.put("lista", lista);
 		}
     	
@@ -123,6 +123,7 @@ public class UsuarioController {
     @ResponseBody
     @RequestMapping("/eliminarUsuarios")
     public Map<String, Object> eliminarUsuario(int id){
+    	System.out.println("-------------"+id);
     	Map<String, Object> mensaje = new HashMap<String, Object>();
     	try {
     		Optional<Usuario> optUsuario = usuarioServicio.obtieneporId(id);
@@ -136,7 +137,7 @@ public class UsuarioController {
 			e.printStackTrace();
 			mensaje.put("MENSAJE", "Error al eliminar Usuario");
 		} finally {
-			List<Usuario> lista = usuarioServicio.listaUsuarios();
+			List<Usuario> lista = usuarioServicio.listaUsuariosPorEstado();
 			mensaje.put("lista", lista);
 		}
     	

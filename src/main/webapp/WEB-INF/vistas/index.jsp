@@ -204,7 +204,7 @@
 					var name = item.nomProd;
 					
 					div.setAttribute('class', 'col-lg-3');
-					div.innerHTML = "<div class='card mb-4'><div class='card-body'><a href='/detalle/"+item.idProd+"'> <img src='img/producto/"+item.idProd+".jpg' class='d-block w-100' alt=''></a><div class='text-center'><a href='/detalle/"+item.idProd+"'><h5>"+item.nomProd+"</h5> </a> <span>S/. "+item.precio+"</span></div></div></div>";
+					div.innerHTML = "<div class='card mb-4'><div class='card-body'><a href='/detalle/"+item.idProd+"'> <img src='"+item.urlImg+"' class='d-block w-100' alt=''></a><div class='text-center'><a href='/detalle/"+item.idProd+"'><h5>"+item.nomProd+"</h5> </a> <span>S/. "+item.precio+"</span></div></div></div>";
 		
 					console.log(name);
 					$("#id_"+row).append(div);

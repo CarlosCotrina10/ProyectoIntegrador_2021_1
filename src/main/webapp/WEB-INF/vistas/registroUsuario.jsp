@@ -91,15 +91,18 @@
 						  <option value=" ">Seleccione un Distrito</option>
 						</select> 
 			          </div>
-					</div>
-						        
-				    <div class="form-group row">
-					  <label for="tipo" class="col-xl-2 col-sm-2 col-form-label">Tipo</label>
+			          <label for="tipo" class="col-xl-2 col-sm-2 col-form-label">Tipo</label>
 					   <div class="col-xl-4 col-sm-5">
 					     <select class="form-control" name="tipo" id="id_tipo">
 						   <option value=" ">Seleccione un Tipo</option>
 						 </select>
 					   </div>
+					</div>
+						        
+				    <div class="form-group row">
+					  
+					   <input type="hidden" name="estado" value="1">
+					   <!--  
 					  <label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 					   <div class="col-xl-4 col-sm-5">
 						  <select class="form-control" name="estado" id="id_estado">
@@ -108,6 +111,7 @@
 								<option value="1">Disponible</option>
 						  </select>
 					   </div>
+					   -->
 			        </div>
 						
                         <div class="form-group row">							
@@ -195,7 +199,7 @@
   $("#id_registrar").click(function(){
 		var validator = $('#id_form_registra').data('bootstrapValidator');
 	    validator.validate();
-	    validarForm()
+	    validarForm();
 		
 	    if (validator.isValid()) {
 	        $.ajax({
@@ -246,7 +250,8 @@
 	                	message:'El nombre es de 3 a 50 caracteres',
 	                	min : 3,
 	                	max : 50
-	                }
+	                },
+	                
 	            }
 	        },
 		    "apellido": {
@@ -267,7 +272,11 @@
 	            validators: {
 	                notEmpty: {
 	                    message: 'El nombre de usuario es un campo obligatorio!'
-	                }
+	                },
+                    regexp: {
+                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                        message: 'El correo no es valido'
+                    }
 	            }
 	        },
 	        "clave": {
@@ -275,7 +284,12 @@
 	            validators: {
 	            	notEmpty: {
 	                    message: 'La clave es un campo obligatorio!'
-	                }
+	                },
+                    stringLength: {
+                        min: 6,
+                        max: 20,
+                        message: 'La clave es de 6 a 20 caracteres'
+                    },
 	            }
 	        },
 	        "distrito.nomDistrito": {

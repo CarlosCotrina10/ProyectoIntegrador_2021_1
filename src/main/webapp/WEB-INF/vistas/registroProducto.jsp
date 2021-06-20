@@ -82,10 +82,19 @@
 											</div>
 										</div>
 										<div class="form-group row">
+											<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
+											<div class="col-xl-10 col-sm-10">
+												<input type="file" id="imgProd" name="imgProd" class="">
+												<input type="hidden" id="urlImg" name="urlImg">
+												<img src="" id="imgPrevisualizacion" class="img-thumbnail" alt="No imagen" width="30%">
+																							
+											</div>
+										</div>
+										<div class="form-group row">
 											<label for="stock" class="col-xl-2 col-sm-2 col-form-label">Stock</label>
 											<div class="col-xl-4 col-sm-5">
 												<input type="number" min="0" class="form-control"
-													id="id_stock" name="stock" placeholder="0">
+													id="id_stock" name="stock" placeholder="0" title="entro">
 											</div>
 											<label for="precio" class="col-xl-2 col-sm-2 col-form-label">Precio</label>
 											<div class="col-xl-4 col-sm-5">
@@ -102,21 +111,18 @@
 													<option value=" ">Seleccione una categoria</option>
 												</select>
 											</div>
+											<input type="hidden" name="estado" value="1">
+											<!--  
 											<label for="estado" class="col-xl-2 col-sm-2 col-form-label">Estado</label>
 											<div class="col-xl-4 col-sm-5">
 												<select class="form-control" name="estado" id="id_estado">
-													<option value="">Seleccione un Estado</option>
+													<option value=" ">Seleccione un Estado</option>
 													<option value="1">Activo</option>
 													<option value="0">Inactivo</option>
 												</select>
 											</div>
-										</div>
-										<div class="form-group row">
-											<label for="imagen" class="col-xl-2 col-sm-2 col-form-label">Imagen</label>
-											<div class="col-xl-10 col-sm-10">
-												<input type="file" class="">
-											</div>
-										</div>
+											-->
+										</div>										
 										<div class="form-group row">
 											<div class="col-sm-12">
 												<div class="float-right">
@@ -124,6 +130,7 @@
 														value="Limpiar">
 													<button type="button" class="btn btn-primary "
 														id="id_registrar">Registrar</button>
+														
 												</div>
 
 											</div>
@@ -170,7 +177,7 @@
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Registro de Producto resultado</div>
+				<div class="modal-body" id="mensajeRegistroRes">Registro de Producto resultado</div>
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
 						data-dismiss="modal">Aceptar</button>
@@ -199,9 +206,17 @@
 	<script src="js/demo/datatables-demo.js"></script>
 
 	<script src="js/general/general.js"></script>
+	
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 
+	<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+	
 	<script type="text/javascript">
-  
+  	
+	$(document).ready(function(){
+		cambiarLinkSidebar("#nav-usu", "#collapseUsuario","#nav-prod", "#collapseProducto", 1);			
+  	});
+	
 	//Listar Categoria
 	$.getJSON("listarCategoria", {}, function(data){
 		$.each(data, function(i,item){
@@ -210,29 +225,7 @@
 	});
 
  
-   //Registrar Producto
-	 $("#id_registrar").click(function(){
-			var validator = $('#id_form_registrar').data('bootstrapValidator');
-		    validator.validate();
-		    //validarForm()
-			
-		    if (validator.isValid()) {
-		        $.ajax({
-		          type: "POST",
-		          url: "registraProducto", 
-		          data: $('#id_form_registrar').serialize(),
-		          success: function(data){
-		        	  //mostrarMensaje(data.MENSAJE);
-		        	  limpiar();
-		        	  validator.resetForm();
-		          },
-		          error: function(){
-		        	  mostrarMensaje(MSG_ERROR);
-		          }
-		        });
-		        
-		    }
-		});
+   
   
 	 function limpiar(){
 			$('#id_nombre').val('');
@@ -241,7 +234,14 @@
 			$('#id_precio').val('');
 			$('#id_categoria').val(' ');
 			$('#id_estado').val(' ');
-		}
+			$('#imgPrevisualizacion').attr('src',' ');
+	}
+	 
+	 $('#id_limpiar').click(function(){
+		 var validator = $('#id_form_registrar').data('bootstrapValidator');
+		 validator.resetForm();
+		 $('#imgPrevisualizacion').attr('src',' ');
+	 });
 	 
 	 </script>
 
@@ -262,9 +262,9 @@
 	                    message: 'El nombre es un campo obligatorio!'
 	                },
 	                stringLength :{
-	                	message:'El nombre es de 15 a 300 caracteres',
+	                	message:'El nombre es de 3 a 300 caracteres',
 	                	min : 3,
-	                	max : 50
+	                	max : 900
 	                }
 	            }
 	        },
@@ -275,12 +275,20 @@
 		                message: 'La descripcion es un campo obligatorio!'
 		            },
 		            stringLength :{
-		            	message:'La descripcion es de 15 a 900 caracteres',
+		            	message:'La descripcion es de 3 a 900 caracteres',
 		            	min : 3,
-		            	max : 50
+		            	max : 900
 		            }
 		        }
 		    },
+		    "imgProd": {
+	    		selector : '#imgProd',
+	            validators: {
+	                notEmpty: {
+	                    message: 'Eliga una imagen'
+	                }
+	            }
+	        },
 	        "stock": {
 	    		selector : '#id_stock',
 	            validators: {
@@ -318,6 +326,105 @@
 	});
 	
 	</script> 
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+
+	$(document).ready(function(){
+		mostrarImg();
+	});
+	
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAMYGSWddvLr6JfM_rLXIbYhfK9xSpHhBQ",
+    authDomain: "proyectointegrador2021-bb331.firebaseapp.com",
+    projectId: "proyectointegrador2021-bb331",
+    storageBucket: "proyectointegrador2021-bb331.appspot.com",
+    messagingSenderId: "250568325741",
+    appId: "1:250568325741:web:50ca1a94df7b9a16e59d64"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  function mostrarImg(){
+	  console.log("dfads");
+	  	const $seleccionArchivos = document.querySelector("#imgProd");
+	    const $imagenPrevisualizacion = document.querySelector("#imgPrevisualizacion");
+	    console.log("entro");
+	    $seleccionArchivos.addEventListener("change", () => {
+		    const archivos = $seleccionArchivos.files;
+		    if (!archivos || !archivos.length) {
+		      $imagenPrevisualizacion.src = "";		     
+		      return;
+		    }
+		    const primerArchivo = archivos[0];
+		    const objectURL = URL.createObjectURL(primerArchivo);
+		    $imagenPrevisualizacion.src = objectURL;
+		    
+	    })
+  }
+  
+  
+//Registrar Producto
+	$("#id_registrar").click(function(){
+		var validator = $('#id_form_registrar').data('bootstrapValidator');
+		validator.validate();
+		
+		if (validator.isValid()) {
+		
+			var storage = firebase.storage();
+			var file = ($('#imgProd'))[0].files[0];
+				  
+			var file2 = $("#imgProd").val();
+			var extension = file2.split(".").pop().toLowerCase();
+			      
+			if(extension == "jpg" || extension == "png" || extension == "jpeg"){
+				var storageRef = storage.ref('productos/img/'+file.name);
+				var uploadTask = storageRef.put(file);
+		
+				uploadTask.on('state_changed',function(snapshot){
+		
+				},function(error){
+					console.log(error);
+				},function(){
+					document.getElementById("imgProd").value = "";
+				    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+				    console.log('File available at', downloadURL); 
+				    $("#urlImg").val(downloadURL);
+				    console.log("entro");
+				    
+				    registrarProducto(validator);
+				    
+				 	});
+				});
+			}else{
+				                       
+			}  
+		}
+	});
+	
+	function registrarProducto(validator){
+		$.ajax({
+	    	type: "POST",
+	      	url: "registraProducto", 
+	      	data: $('#id_form_registrar').serialize(),
+	      	success: function(data){
+	      		$("#mensajeRegistroRes").text(data.MENSAJE);
+	      		$("#msgProductoModal").modal("show");
+	      		limpiar();
+	      		validator.resetForm();
+	      	},
+	      	error: function(){
+	      		$("#mensajeRegistroRes").text("Error al Registrar Producto");
+	      		$("#msgProductoModal").modal("show");
+	      	}
+	    });		      		       
+	      
+	}
+  
+</script>
 
 </body>
 </html>

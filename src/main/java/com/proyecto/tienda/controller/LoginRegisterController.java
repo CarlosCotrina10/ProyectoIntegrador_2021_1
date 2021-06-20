@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.proyecto.tienda.entidad.TiposUsuario;
 import com.proyecto.tienda.entidad.Usuario;
 import com.proyecto.tienda.entidad.UsuarioFalso;
 import com.proyecto.tienda.servicio.UsuarioServicio;
@@ -26,6 +28,11 @@ public class LoginRegisterController {
 	@RequestMapping("/login")
 	public String verLogin() {
 		return "login";
+	}
+	
+	@RequestMapping("/loginAdmin")
+	public String verLoginAdmin() {
+		return "loginAdmin";
 	}
 	
 	@RequestMapping("/register")
@@ -49,11 +56,31 @@ public class LoginRegisterController {
 		}
 	}
 	
+	@RequestMapping("/logeoAdmin")
+	public String loginAdmin(Usuario usu, HttpSession session2, HttpServletRequest request2) {		
+		
+		Usuario usuario = usuarioServicio.loginUsuario(usu);
+		if(usuario == null) {
+			request2.setAttribute("mensaje", "El usuario o contraseña es incorrecto");
+			return "loginAdmin";
+		}else {
+			if(usuario.getTipo().getIdTipo() == 1) {
+				
+			}else {
+				request2.setAttribute("mensaje", "El usuario o contraseña es incorrecto");
+				return "loginAdmin";
+			}
+			session2.setAttribute("objUsuarioAdmin", usuario);
+			return "registroProducto";
+		}		
+		
+	}
+	
 	@ResponseBody
 	@RequestMapping("/registrar")
 	public Map<String, Object> registro(UsuarioFalso usu) {
 		Map<String, Object> salida = new HashMap<>();
-		
+				
 		Usuario u = new Usuario();
 		u.setNombre(usu.getNombre());
 		u.setApellido(usu.getApellido());
@@ -62,6 +89,7 @@ public class LoginRegisterController {
 		u.setClave(usu.getClave());
 		u.setTipo(usu.getTipo());
 		u.setEstado(1);
+		System.out.println("-----------------"+u);
 		try {
 			List<Usuario> lista = usuarioServicio.listarPorUsuario(u.getUser());
 			
@@ -98,6 +126,19 @@ public class LoginRegisterController {
 
 		request.setAttribute("mensaje", "El usuario salió de sesión");
 		return "index";
+
+	}
+	
+	@RequestMapping("/logoutAdmin")
+	public String logoutAdmin(HttpSession session2, HttpServletRequest request2, HttpServletResponse response2) {
+		session2.invalidate();
+
+		response2.setHeader("Cache-control", "no-cache");
+		response2.setHeader("Expires", "0");
+		response2.setHeader("Pragma", "no-cache");
+
+		request2.setAttribute("mensaje", "El usuario salió de sesión");
+		return "loginAdmin";
 
 	}
 
