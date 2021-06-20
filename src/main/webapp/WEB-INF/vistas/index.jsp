@@ -166,7 +166,47 @@
 		class="fas fa-angle-up"></i>
 	</a>
 
-	
+	<!-- Mensaje de Boleta-->
+	<div class="modal fade" id="msgBoletaModal" tabindex="-1"
+		role="dialog" aria-labelledby="msgBoletaLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #4e73df;">
+					<h5 class="modal-title" id="msgBoletaLabel" style="color: white;">Boleta</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					  <div class="mb-3 row">
+					    <label for="" class="col-sm-6 col-form-label">Numero Boleta</label>
+					    <label for="" class="col-sm-6 col-form-label">B00002</label>
+					  </div>
+					  <div class="mb-3 row">
+					    <label for="" class="col-sm-6 col-form-label">Código Usuario</label>
+					    <label for="" class="col-sm-6 col-form-label">1</label>
+					  </div>
+					   <div class="mb-3 row">
+					    <label for="" class="col-sm-6 col-form-label">Fecha Boleta</label>
+					    <label for="" class="col-sm-6 col-form-label">12-12-2020</label>
+					  </div>
+					   <div class="mb-3 row">
+					    <label for="" class="col-sm-6 col-form-label">Total</label>
+					    <label for="" class="col-sm-6 col-form-label">300.0</label>
+					  </div>
+					  <div class="mb-3 row">
+					    <label for="" class="col-sm-6 col-form-label">Total</label>
+					    <label for="" class="col-sm-6 col-form-label">Cancelado</label>
+					  </div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
