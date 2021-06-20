@@ -29,7 +29,7 @@
 			<div id="content">
 
 				<!-- Topbar -->
-				<jsp:include page="topBar.jsp"/>
+				<jsp:include page="topBar.jsp" />
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
@@ -37,7 +37,9 @@
 
 					<div>
 						<!-- Cuando el carrito tiene producto -->
-						<h2 class="text-gray-900"><strong>CARRITO DE COMPRAS</strong></h2>
+						<h2 class="text-gray-900">
+							<strong>CARRITO DE COMPRAS</strong>
+						</h2>
 						<div>
 							<br>
 							<table class="w-100 table">
@@ -51,8 +53,9 @@
 										<th class="col-md-1"></th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="id_table_boleta_body">
 									<!-- aqui va un for -->
+									<!-- 
 									<tr class="row">
 										<td class="col-md-1"><a href="/detalle"><img
 												src="img/img1.jpg" alt="" class="img-fluid"></a></td>
@@ -69,25 +72,11 @@
 												<i class="fas fa-trash-alt fa-fw" style="width: 100%;"></i>
 										</a></td>
 									</tr>
-									<tr class="row">
-										<td class="col-md-1"><a href="/detalle"><img
-												src="img/img1.jpg" alt="" class="img-fluid"></a></td>
-										<td class="col-md-7"><a href="/detalle"
-											class="text-decoration-none">SMARTPHONE XIAOMI REDMI NOTE
-												8 COLOR LUZ DE LUNA, 4GB RAM, 64GB ALMACENAMIENTO</a></td>
-										<td class="col-md-1"><span class="text-danger">S/.</span>
-											794.00</td>
-										<td class="col-md-1"><input type="number" disabled
-											class="form-control" value="1"></td>
-										<td class="col-md-1"><span class="text-danger">S/.</span>
-											794.00</td>
-										<td class="col-md-1"><a class="" href="#" role="button">
-												<i class="fas fa-trash-alt fa-fw" style="width: 100%;"></i>
-										</a></td>
-									</tr>
+									 -->
 									<!-- end for -->
 								</tbody>
-								<tfoot>
+								<tfoot id="id_table_boleta_footer">
+								<!--  
 									<tr class="row">
 										<td class="col-md-8"></td>
 										<td class="col-md-3 text-right">
@@ -101,6 +90,7 @@
 										</td>
 										<td class="col-md-1"></td>
 									</tr>
+								-->
 								</tfoot>
 							</table>
 						</div>
@@ -149,7 +139,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
 		crossorigin="anonymous"></script>
-				
+
 	<script>
 		  window.watsonAssistantChatOptions = {
 		      integrationID: "36b1b9cd-e5bf-436f-8d59-50ecbd2126f1", // The ID of this integration.
@@ -162,6 +152,38 @@
 		    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
 		    document.head.appendChild(t);
 		  });
+		  
+		  //Llenar carrito
+		  $(document).ready(function() {
+			  	var total = 0;
+
+				$.getJSON("listaCarrito",{}, function (data){
+					console.log(data);
+					if(data.lenght == 0){
+						$.each(data, function(index, item){
+							$('#id_table_boleta_body').append("<tr class='row'><td class='col-md-1'><a href='/detalle/"+item.idProd+"'><img src='img/producto/"+item.idProd+".jpg' alt='' class='img-fluid'></a></td><td class='col-md-7'><a href='/detalle"+item.idProd+"' class='text-decoration-none'>"+item.nombre+"</a></td><td class='col-md-1'><span class='text-danger'>S/.</span>"+item.precio+"</td><td class='col-md-1'><input type='number' disabled class='form-control' value='"+item.cantidad+"'></td><td class='col-md-1'><span class='text-danger'>S/.</span>"+item.totalParcial+"</td><td class='col-md-1'><a class='' href='#' onclick='f_elimina_itemCarrito(" + item.idProd +");' role='button'><i class='fas fa-trash-alt fa-fw' style='width: 100%;'></i></a></td></tr>");     
+							total = total + item.totalParcial;
+						});
+						
+						$('#id_table_boleta_footer').append("<tr class='row'><td class='col-md-8'></td><td class='col-md-3 text-right'><div class='text-danger'><strong>Total a Pagar S/. "+total+"</strong></div><div class='my-4'><button class='btn btn-lg btn-primary w-100'>COMPRAR</button></div></td><td class='col-md-1'></td></tr>");
+					} else {
+						$('#id_table_boleta_footer').append("<div class='text-center' style='margin-top: 160px;'><h4><strong><span class='text-danger'>TU CARRITO ESTÁ VACÍO </span>¡AGREGA TUS PRODUCTOS Y DISFRUTA DE NUESTROS BAJOS PRECIOS!</strong></h4></div>");	
+					}					
+				});
+			});
+		  
+		//Al pulsar el botón eliminar
+			function f_elimina_itemCarrito(id){	
+				//limpiar la tabla
+				$("#id_table_boleta_body").empty();
+					
+				$.getJSON("eliminaCarritoItem",{"idProd":id}, function (data){
+					$.each(data, function(index, item){
+						$('#id_table_boleta_body').append("<tr class='row'><td class='col-md-1'><a href='/detalle/"+item.idProd+"'><img src='img/"+item.idProd+".jpg' alt='' class='img-fluid'></a></td><td class='col-md-7'><a href='/detalle/"+item.idProd+"' class='text-decoration-none'>"+item.nombre+"</a></td><td class='col-md-1'><span class='text-danger'>S/.</span>"+item.precio+"</td><td class='col-md-1'><input type='number' disabled class='form-control' value='"+item.cantidad+"'></td><td class='col-md-1'><span class='text-danger'>S/.</span>"+item.totalParcial+"</td><td class='col-md-1'><a class='' href='#' onclick='f_elimina_itemCarrito(" + item.idProd +");' role='button'><i class='fas fa-trash-alt fa-fw' style='width: 100%;'></i></a></td></tr>");                
+					});
+				});
+
+			}
 	</script>
 </body>
 </html>

@@ -66,7 +66,7 @@ public class TiendaController {
 		return servicio.listaProductosPorStock();
 	}
 	
-	@GetMapping("/detalle/{id}")
+	@RequestMapping("/detalle/{id}")
 	public String verDetalleProducto(RedirectAttributes redirectAttributes, @PathVariable("id") int idProd ) {
 		Optional<Producto> optProd =  servicio.obtienePorId(idProd);
 		System.out.println(optProd.get().getNomProd());
