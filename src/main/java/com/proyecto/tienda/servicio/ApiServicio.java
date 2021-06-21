@@ -7,6 +7,6 @@ import com.proyecto.tienda.entidad.Boleta;
 public interface ApiServicio {
 
 	public abstract Boleta insertaActualiza(Boleta obj);
-	public abstract Optional<Boleta> obtienePorNum(String numBoleta);
+	public abstract Optional<Boleta> obtienePorNum(int numBoleta);
 	
 }

@@ -20,7 +20,7 @@ public class ApiServicioImpl implements ApiServicio {
 	}
 
 	@Override
-	public Optional<Boleta> obtienePorNum(String numBoleta) {
+	public Optional<Boleta> obtienePorNum(int numBoleta) {
 		return repo.findById(numBoleta);
 	}
 	

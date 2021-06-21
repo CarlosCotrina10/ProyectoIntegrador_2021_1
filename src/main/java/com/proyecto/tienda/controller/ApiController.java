@@ -51,13 +51,17 @@ public class ApiController {
 
 		System.out.println("API REST >>>>> " + bol.getInfo());
 		MensajeJSON mensajeRetorno = new MensajeJSON();
-		Optional<Boleta> optBoleta = servicio.obtienePorNum(bol.getInfo());
+		//int num = Integer.parseInt(bol.getInfo().substring(1, 4));
+		System.out.println(bol.getInfo().substring(1,5));
+		System.out.println(bol.getInfo().substring(1,5).replaceAll("0", ""));
+		int num = Integer.parseInt(bol.getInfo().substring(1,5).replaceAll("0", ""));
+		Optional<Boleta> optBoleta = servicio.obtienePorNum(num);
 		
 		if (optBoleta.isPresent()) {
 			Boleta boleta = optBoleta.get();
 			
 			if (boleta.getEstado() == 0) {
-				mensajeRetorno.setInfo("La compra con el código " + bol.getInfo() + " ya había sido cancelada.");
+				mensajeRetorno.setInfo("La compra con el código " + num + " ya había sido cancelada.");
 				return ResponseEntity.ok(mensajeRetorno);
 			}
 			
@@ -72,7 +76,7 @@ public class ApiController {
 				return ResponseEntity.ok(mensajeRetorno);
 			}
 		} else {
-			mensajeRetorno.setInfo("No existe una compra con el código " + bol.getInfo() + ".");
+			mensajeRetorno.setInfo("No existe una compra con el código " + num + ".");
 			return ResponseEntity.ok(mensajeRetorno);
 		}
 

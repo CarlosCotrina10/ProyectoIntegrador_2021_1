@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +18,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -23,10 +26,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Boleta {
 	
 	@Id
-	@Column(unique = true, nullable = false)
-	private String numBoleta;
+	//
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//
+	@Column(name = "numBoleta")
+	private int numBoleta;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codUsuario", nullable = false)
 	private Usuario usuario;
 	
@@ -38,11 +44,11 @@ public class Boleta {
 	
 	private int estado;
 	
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "boleta")
 	private List<DetalleBoleta> detallesBoleta;
 	
 	
-
 	public List<DetalleBoleta> getDetallesBoleta() {
 		return detallesBoleta;
 	}
@@ -59,11 +65,11 @@ public class Boleta {
 		this.estado = estado;
 	}
 
-	public String getNumBoleta() {
+	public int getNumBoleta() {
 		return numBoleta;
 	}
 
-	public void setNumBoleta(String numBoleta) {
+	public void setNumBoleta(int numBoleta) {
 		this.numBoleta = numBoleta;
 	}
 

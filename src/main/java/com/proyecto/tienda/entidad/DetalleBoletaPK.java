@@ -10,26 +10,50 @@ public class DetalleBoletaPK implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "numBoleta", unique = true, nullable = false, insertable = true, updatable = false)
-	private String numBoleta;
+	private int numBoleta;
 	
-	@Column(name = "idProd", unique = true, nullable = false, insertable = true, updatable = false)
-	private int idProd;
+	private int idprod;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		int num;
+		result = prime * result + numBoleta;
+		result = prime * result + idprod;
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetalleBoletaPK other = (DetalleBoletaPK) obj;
+		if (numBoleta != other.numBoleta)
+			return false;
+		if (idprod != other.idprod)
+			return false;
+		return true;
+	}
 
-	public String getNumBoleta() {
+	public int getNumBoleta() {
 		return numBoleta;
 	}
 
-	public void setNumBoleta(String numBoleta) {
+	public void setNumBoleta(int numBoleta) {
 		this.numBoleta = numBoleta;
 	}
 
 	public int getIdProd() {
-		return idProd;
+		return idprod;
 	}
 
 	public void setIdProd(int idProd) {
-		this.idProd = idProd;
+		this.idprod = idProd;
 	}
 	
 	

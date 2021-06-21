@@ -181,28 +181,28 @@
 				<div class="modal-body">
 					  <div class="mb-3 row">
 					    <label for="" class="col-sm-6 col-form-label">Numero Boleta</label>
-					    <label for="" class="col-sm-6 col-form-label">B00002</label>
+					    <label for="" class="col-sm-6 col-form-label">B000${bol.numBoleta}</label>
 					  </div>
 					  <div class="mb-3 row">
-					    <label for="" class="col-sm-6 col-form-label">Código Usuario</label>
-					    <label for="" class="col-sm-6 col-form-label">1</label>
+					    <label for="" class="col-sm-6 col-form-label">Usuario</label>
+					    <label id="id_usuario_nombre" for="" class="col-sm-6 col-form-label">${bol.usuario.nombre} ${bol.usuario.apellido}</label>
 					  </div>
 					   <div class="mb-3 row">
 					    <label for="" class="col-sm-6 col-form-label">Fecha Boleta</label>
-					    <label for="" class="col-sm-6 col-form-label">12-12-2020</label>
+					    <label for="" class="col-sm-6 col-form-label">${bol.fecha}</label>
 					  </div>
 					   <div class="mb-3 row">
 					    <label for="" class="col-sm-6 col-form-label">Total</label>
-					    <label for="" class="col-sm-6 col-form-label">300.0</label>
+					    <label for="" class="col-sm-6 col-form-label">S/. ${bol.total}</label>
 					  </div>
 					  <div class="mb-3 row">
-					    <label for="" class="col-sm-6 col-form-label">Total</label>
-					    <label for="" class="col-sm-6 col-form-label">Cancelado</label>
+					    <label for="" class="col-sm-6 col-form-label">Estado</label>
+					    <label for="" class="col-sm-6 col-form-label">En proceso</label>
 					  </div>
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-secondary" type="button"
-						data-dismiss="modal">Aceptar</button>
+						data-dismiss="modal" id="id_aceptar_boleta">Aceptar</button>
 				</div>
 			</div>
 		</div>
@@ -227,7 +227,15 @@
 	<script type="text/javascript">
 	
 		$(document).ready(function() {
-			$.getJSON("listarEnTienda", {}, function(data) {
+			var nom = $("#id_usuario_nombre").text();
+			console.log(nom);
+			if (nom == " ") {
+				
+			} else {
+				$("#msgBoletaModal").modal("show");
+			}
+			
+			$.getJSON("listarEnTienda", {}, function(data) {				
 				var cont = 4;
 				var row = 0;
 				$.each(data, function(i, item){
@@ -252,7 +260,11 @@
 				});
 			});
 		});
-	
+		
+		$("#id_aceptar_boleta").click(function (){
+			$("#msgBoletaModal").modal("hide");
+		})
+
 	</script>
 	<script>
 		  window.watsonAssistantChatOptions = {

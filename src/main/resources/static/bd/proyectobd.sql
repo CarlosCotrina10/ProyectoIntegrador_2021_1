@@ -65,7 +65,7 @@ CREATE TABLE tb_cliente(
 -- CREANDO LA TABAL tb_boleta
 DROP TABLE IF EXISTS tb_boleta;
 CREATE TABLE tb_boleta(
-	numBoleta 	char(5),
+	numBoleta 	int auto_increment,
 	codUsuario 	int,
 	fecha 		datetime,
 	total 		decimal(8,2),
@@ -93,7 +93,7 @@ CREATE TABLE tb_productos(
 -- CREANDO LA TABAL tb_detalle_boleta
 DROP TABLE IF EXISTS tb_detalle_boleta;
 CREATE TABLE tb_detalle_boleta(
-	numBoleta char(5),
+	numBoleta 	int auto_increment,
 	idprod 	  int,
 	cantidad  int,
 	preciovta decimal (8,2),
@@ -172,15 +172,15 @@ insert into tb_productos values(null, 'Kit Teclado y Mouse inalámbrico Microsof
 insert into tb_productos values(null, 'Kit Teclado y Mouse Teros TED8700, USB, acabado elegante, Negro, Español, Óptico.', 'Kit Teclado y Mouse Teros TED8700, USB, acabado elegante, Negro, Español, Óptico. Teclado: Diseño elegante, tipo estandar, idioma Español.Mouse: sensor óptico, 2 botones, rueda Scroll, 1000 DPI.', 80, 23.00, 5 , 1,'https://firebasestorage.googleapis.com/v0/b/proyectointegrador2021-bb331.appspot.com/o/productos%2Fimg%2F19.jpg?alt=media&token=9b270eb0-dc81-4d02-8a0d-5ad23161baf2');
 insert into tb_productos values(null, 'Kit de teclado y mouse Gamer Advance ADV-4150, Retro-Iluminado USB, negro.', 'Kit de teclado y mouse Gamer Advance ADV-4150, Retro-Iluminado USB, negro. Teclado Retro-Iluminado, USB.Mouse óptico, 4 botones, USB.', 30, 48.00, 5 , 1,'https://firebasestorage.googleapis.com/v0/b/proyectointegrador2021-bb331.appspot.com/o/productos%2Fimg%2F20.jpg?alt=media&token=1a59a77d-1608-4438-a784-ac2eeed784ce'); -- 20
 
-insert into tb_boleta values('B0001', 3, '2020-06-14', 999, 1);
-insert into tb_detalle_boleta values('B0001', 17, 10, 99.90);
+insert into tb_boleta values(1, 3, '2020-06-14', 999, 1);
+insert into tb_detalle_boleta values(1, 17, 10, 99.90);
 
-insert into tb_boleta values('B0002', 4, '2020-06-26', 199, 1);
-insert into tb_detalle_boleta values('B0002', 1, 10, 19.90);
+insert into tb_boleta values(2, 4, '2020-06-26', 199, 1);
+insert into tb_detalle_boleta values(2, 1, 10, 19.90);
 
-insert into tb_boleta values('B0003', 5, '2020-07-03', 599.90, 1);
-insert into tb_detalle_boleta values('B0003', 10, 1, 599.90);
+insert into tb_boleta values(3, 5, '2020-07-03', 599.90, 1);
+insert into tb_detalle_boleta values(3, 10, 1, 599.90);
 
-insert into tb_boleta values('B0004', 6, '2020-07-11', 999, 1);
-insert into tb_detalle_boleta values('B0004', 15, 1, 129.90);
+insert into tb_boleta values(4, 6, '2020-07-11', 999, 1);
+insert into tb_detalle_boleta values(4, 15, 1, 129.90);
 

@@ -21,7 +21,7 @@ import com.proyecto.tienda.servicio.UsuarioServicio;
 
 @Controller
 public class LoginRegisterController {
-
+	
 	@Autowired
 	private UsuarioServicio usuarioServicio;
 	

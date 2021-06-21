@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.proyecto.tienda.entidad.Boleta;
 
-public interface ApiRepositorio extends JpaRepository<Boleta, String>{
+public interface ApiRepositorio extends JpaRepository<Boleta, Integer>{
 	/*
 	@Query("")
 	public abstract Boleta cancelaCompra(String numBoleta);

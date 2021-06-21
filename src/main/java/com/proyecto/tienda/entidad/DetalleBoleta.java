@@ -15,17 +15,17 @@ public class DetalleBoleta {
 	private DetalleBoletaPK detalleBoletaPK;
 	
 	@Column(precision = 22)
-	private double precio;
+	private double preciovta;
 	
 	@Column(length = 10)
 	private int cantidad;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "numBoleta", nullable = false, insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "numBoleta", nullable = true, insertable = false, updatable = false)
 	private Boleta boleta;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "idProd", nullable = false, insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "idprod", nullable = true, insertable = false, updatable = false)
 	private Producto producto;
 
 	public DetalleBoletaPK getDetalleBoletaPK() {
@@ -37,11 +37,11 @@ public class DetalleBoleta {
 	}
 
 	public double getPrecio() {
-		return precio;
+		return preciovta;
 	}
 
 	public void setPrecio(double precio) {
-		this.precio = precio;
+		this.preciovta = precio;
 	}
 
 	public int getCantidad() {
