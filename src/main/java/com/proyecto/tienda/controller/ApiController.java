@@ -61,7 +61,7 @@ public class ApiController {
 			Boleta boleta = optBoleta.get();
 			
 			if (boleta.getEstado() == 0) {
-				mensajeRetorno.setInfo("La compra con el código " + num + " ya había sido cancelada.");
+				mensajeRetorno.setInfo("La compra con el código " + bol.getInfo() + " ya había sido cancelada.");
 				return ResponseEntity.ok(mensajeRetorno);
 			}
 			
@@ -76,7 +76,7 @@ public class ApiController {
 				return ResponseEntity.ok(mensajeRetorno);
 			}
 		} else {
-			mensajeRetorno.setInfo("No existe una compra con el código " + num + ".");
+			mensajeRetorno.setInfo("No existe una compra con el código " + bol.getInfo() + ".");
 			return ResponseEntity.ok(mensajeRetorno);
 		}
 
