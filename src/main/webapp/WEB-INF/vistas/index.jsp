@@ -264,6 +264,12 @@
 		$("#id_aceptar_boleta").click(function (){
 			$("#msgBoletaModal").modal("hide");
 		})
+		
+		$(document).ready(function() {
+			$.getJSON("listaCarrito",{}, function (data){
+				$("#id_carrito_num").text(data.length);
+			});
+		});
 
 	</script>
 	<script>

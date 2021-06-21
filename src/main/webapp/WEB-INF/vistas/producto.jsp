@@ -170,6 +170,12 @@
 						
 				}
 			});
+		
+			$(document).ready(function() {
+				$.getJSON("listaCarrito",{}, function (data){
+					$("#id_carrito_num").text(data.length);
+				});
+			});
 	</script>
 	
 </body>

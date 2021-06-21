@@ -51,7 +51,7 @@
 			<li class="nav-item dropdown no-arrow mx-1"><a class="nav-link"
 				href="/carrito" id="carrito"> <i
 					class="fas fa-shopping-cart fa-fw"></i> <!-- Icon -- Carrito --> <span
-					class="badge badge-danger badge-counter">7</span>
+					class="badge badge-danger badge-counter" id="id_carrito_num"></span>
 			</a></li>
 
 			<div class="topbar-divider d-none d-sm-block"></div>

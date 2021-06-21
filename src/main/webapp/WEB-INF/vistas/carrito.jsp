@@ -171,7 +171,8 @@
 						$('#id_table_boleta_footer').append("<tr class='row'><td class='col-md-8'></td><td class='col-md-3 text-right'><div class='text-danger'><strong>Total a Pagar S/. "+total+"</strong></div><div class='my-4'><a href='/registraBoleta'><button id='id_btnRegistrar' class='btn btn-lg btn-primary w-100'>COMPRAR</button></a></div></td><td class='col-md-1'></td></tr>");
 					} else {
 						$('#id_table_boleta_footer').append("<div class='text-center' style='margin-top: 160px;'><h4><strong><span class='text-danger'>TU CARRITO ESTÁ VACÍO </span>¡AGREGA TUS PRODUCTOS Y DISFRUTA DE NUESTROS BAJOS PRECIOS!</strong></h4></div>");	
-					}					
+					}	
+					$("#id_carrito_num").text(data.length);
 				});
 			});
 		  
@@ -186,6 +187,8 @@
 					});
 					location.reload(); 
 				});
+				
+				
 		
 			}
 		/*
